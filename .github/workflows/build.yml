@@ -1,0 +1,33 @@
+# Rebuilds the generated files on main, so contributors only edit plans/ and code:
+#   dist/quota-board.mjs  the single file people run with curl | node
+#   docs/PLANS.md         the list of supported plans
+name: build
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['dist/**', 'docs/PLANS.md']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: build
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/check.mjs
+      - run: npm test
+      - run: npm run build
+      - name: Commit if changed
+        run: |
+          git add dist/quota-board.mjs docs/PLANS.md
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Rebuild dist/quota-board.mjs and docs/PLANS.md"
+          git push

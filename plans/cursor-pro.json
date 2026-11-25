@@ -1,0 +1,96 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "cursor-pro",
+  "name": "Cursor Pro",
+  "vendor": "Cursor",
+  "status": "legacy",
+  "price": {
+    "amount": 20,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "cursor",
+    "tiers": [
+      "pro"
+    ]
+  },
+  "check": {
+    "label": "Dashboard → Usage / Spending",
+    "url": "https://cursor.com/dashboard"
+  },
+  "meters": [
+    {
+      "id": "cursor-own",
+      "label": "Cursor models pool",
+      "hint": "Composer 2.5, Grok 4.5 to 4.7",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets on your monthly billing date.",
+        "stipulations": [
+          "Cursor's usage API reports the exact cycle end.",
+          "Auto counts here only when it routes to a Cursor model. When Auto or a subagent uses a third-party model, that usage comes from the third-party pool."
+        ]
+      }
+    },
+    {
+      "id": "cursor-other",
+      "label": "Third-party models pool",
+      "hint": "Claude, GPT, Gemini at API price",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets on your monthly billing date.",
+        "stipulations": [
+          "Each request is charged at that model's API list price.",
+          "Cursor sometimes adds bonus usage on top of the included amount."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "On-demand usage bills monthly in arrears at API rates, up to the spend limit set at cursor.com/dashboard/spending. It's off by default; quota-board shows whether yours is on.",
+  "card": {
+    "how": [
+      "Two monthly pools that reset with your billing cycle: Cursor's own models, and third-party models at API price.",
+      "Tab completions are unlimited."
+    ],
+    "ext": [
+      "Third-party models (Claude, GPT, Gemini) are available and drain the third-party pool at each model's API list price, with no markup."
+    ],
+    "quirks": [
+      "Pro is no longer sold. If you switch, Cursor offers Premium ($30) or higher on the new weekly-pool plans. You lose on-demand billing and can't come back; Support can't reverse a switch.",
+      "Cursor doesn't publish Pro's pool sizes. The usage API reports percentages."
+    ],
+    "alert": "Ends 30 Nov 2026: Gemini 4 Carbon intro pricing."
+  },
+  "events": [
+    {
+      "date": "2026-11-21",
+      "what": "GPT-5.6 Sol promotional pricing ended."
+    },
+    {
+      "date": "2026-11-30",
+      "what": "Gemini 4 Carbon intro pricing ends. From 1 Dec it costs $4 in, $0.20 cache read, $20 out per 1M tokens."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Legacy Cursor plans",
+      "url": "https://cursor.com/docs/account/pricing/legacy-cursor-plans",
+      "official": true
+    },
+    {
+      "label": "Cursor pricing docs",
+      "url": "https://cursor.com/docs/account/pricing",
+      "official": true
+    },
+    {
+      "label": "Cursor pricing",
+      "url": "https://cursor.com/pricing",
+      "official": true
+    }
+  ]
+}

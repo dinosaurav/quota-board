@@ -1,0 +1,40 @@
+name: check
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 9 * * 1'   # weekly: flags plan files overdue for a re-check and events that have passed
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Plan files are valid
+        run: node tools/check.mjs
+      - name: Tests
+        run: npm test
+      - name: CLI runs with no logins
+        shell: bash
+        env:
+          QUOTA_BOARD_HOME: ${{ runner.temp }}/qb
+        run: |
+          node --no-warnings bin/quota-board.mjs --only opencode
+          node --no-warnings bin/quota-board.mjs plans > /dev/null
+          test -f "$QUOTA_BOARD_HOME/dashboard.html"
+      - name: Single-file edition runs from a pipe
+        shell: bash
+        env:
+          QUOTA_BOARD_HOME: ${{ runner.temp }}/qb-single
+        run: |
+          node tools/bundle.mjs
+          cd "$RUNNER_TEMP" && node --input-type=module - plans claude < "$GITHUB_WORKSPACE/dist/quota-board.mjs" | grep -q claude-max-5x

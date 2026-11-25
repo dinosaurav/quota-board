@@ -1,0 +1,109 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "nanogpt-pro",
+  "name": "NanoGPT PRO",
+  "vendor": "NanoGPT",
+  "status": "active",
+  "price": {
+    "amount": 12,
+    "currency": "USD",
+    "period": "month",
+    "note": "Can also be paid from your NanoGPT balance."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "NanoGPT usage and billing",
+    "url": "https://nano-gpt.com/balance"
+  },
+  "meters": [
+    {
+      "id": "nanogpt-week",
+      "label": "Weekly input tokens",
+      "hint": "60M input tokens. Usage & billing page, or GET /api/subscription/v1/usage",
+      "period": "week",
+      "auto": "monday-utc",
+      "reset": {
+        "type": "fixed-weekly-utc",
+        "rule": "Resets every Monday at 00:00 UTC.",
+        "stipulations": [
+          "Only input tokens count. Output on included models is free.",
+          "Cached input counts in full.",
+          "Only included open-weight text models draw from it. Closed models are billed from your balance instead.",
+          "Some models count input at a multiple (a 2x model counts each token twice). The docs don't say clearly whether this applies to the subscription allowance.",
+          "It is a soft limit. Requests already running can go past it.",
+          "Rate limits apply on top: 16 concurrent requests and 60 requests per minute."
+        ]
+      }
+    },
+    {
+      "id": "nanogpt-images-day",
+      "label": "Daily images",
+      "hint": "100 images. Usage & billing page, or the usage API",
+      "period": "day",
+      "reset": {
+        "type": "unknown",
+        "rule": "A daily allowance of 100 images. The pricing page doesn't say when it resets, but the usage API reports the exact reset time.",
+        "stipulations": [
+          "Covers 4 image models only. Other image models, video and voice are billed from your balance."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "With a subscription-only key, requests stop at the limit until Monday. If you turn on \"Overflow to pay-as-you-go\" in subscription settings, extra requests are billed from your balance at normal prices instead of failing. Closed models, video, voice, transcription, web search and paid tools always bill from your balance.",
+  "card": {
+    "how": [
+      "60M input tokens a week on included open-weight text models. Output is free.",
+      "100 images a day on 4 image models.",
+      "5% off eligible paid text models billed from your balance."
+    ],
+    "ext": [
+      "Included models are all from other companies: GLM, DeepSeek, Kimi, MiniMax, MiMo, Qwen and more. The full list is at nano-gpt.com/models/text?scope=subscription.",
+      "Claude, GPT, Gemini and Grok are available but billed from your balance at list price, not from the plan.",
+      "Claude Code: set ANTHROPIC_BASE_URL=https://nano-gpt.com/api/v1. OpenCode and other OpenAI-compatible tools use the same base URL. Both have official guides."
+    ],
+    "quirks": [
+      "Picking a closed model in Claude Code or OpenCode silently bills your balance instead of the plan.",
+      "The documented usage API GET /api/subscription/v1/usage reports weekly input tokens and daily images with percent used and reset time. A usage-only token is available for it.",
+      "The weekly cap was added on 17 Feb 2026 and the price rose from $8 to $12 on 12 May 2026 (third-party report, unconfirmed)."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "NanoGPT pricing",
+      "url": "https://nano-gpt.com/pricing",
+      "official": true
+    },
+    {
+      "label": "NanoGPT rate limits",
+      "url": "https://docs.nano-gpt.com/api-reference/miscellaneous/rate-limits.md",
+      "official": true
+    },
+    {
+      "label": "Subscription usage API",
+      "url": "https://docs.nano-gpt.com/api-reference/endpoint/subscription-usage.md",
+      "official": true
+    },
+    {
+      "label": "NanoGPT with Claude Code",
+      "url": "https://docs.nano-gpt.com/integrations/claude-code",
+      "official": true
+    },
+    {
+      "label": "NanoGPT with OpenCode",
+      "url": "https://docs.nano-gpt.com/integrations/opencode",
+      "official": true
+    },
+    {
+      "label": "NanoGPT pricing history (Standard Compute)",
+      "url": "https://standardcompute.com/nanogpt-pricing",
+      "official": false
+    },
+    {
+      "label": "NanoGPT price increase (Standard Compute)",
+      "url": "https://standardcompute.com/nanogpt-price-increase",
+      "official": false
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "jetbrains-ai-pro",
+  "name": "JetBrains AI Pro",
+  "vendor": "JetBrains",
+  "status": "active",
+  "price": {
+    "amount": 10,
+    "currency": "USD",
+    "period": "month",
+    "note": "Included with All Products Pack and dotUltimate licenses."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "JetBrains AI widget, or JetBrains Account",
+    "url": "https://account.jetbrains.com/licenses"
+  },
+  "meters": [
+    {
+      "id": "jetbrains-ai-credits",
+      "label": "Monthly AI credits",
+      "hint": "10 credits ($10). The JetBrains AI widget in the IDE header shows credits left.",
+      "period": "month",
+      "windowSeconds": 2592000,
+      "reset": {
+        "type": "fixed-30d",
+        "rule": "Resets every 30 days from the date you first used your JetBrains AI license, not on your billing date.",
+        "stipulations": [
+          "1 AI credit is $1. Cloud models spend credits at their token cost.",
+          "Code completion, next edit suggestions and local models (Ollama, LM Studio) don't spend credits.",
+          "Junie and the built-in Claude Agent spend these credits.",
+          "Unused credits don't carry over.",
+          "Top-up credits are used only after the monthly credits run out."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "At the limit, cloud AI features stop until the 30-day reset. You can buy top-up credits at $1 each in JetBrains Account or the AI widget. They last 12 months and are never bought automatically on individual plans.",
+  "card": {
+    "how": [
+      "10 AI credits ($10) every 30 days, spent at each cloud model's token cost.",
+      "Code completion and local models are unlimited."
+    ],
+    "ext": [
+      "Claude, GPT and Gemini models are available in AI Assistant and Junie, and spend credits.",
+      "Bring your own Anthropic, OpenAI or OpenAI-compatible key. That usage bills to your key, not your credits.",
+      "ACP agents such as Codex use their own provider login, not JetBrains credits."
+    ],
+    "quirks": [
+      "JetBrains' licensing page also shows AI Pro at $20 for 20 credits and AI Ultimate at $60 for 70. That looks like the organization price; the page doesn't label it.",
+      "Not available in China since 13 July 2026.",
+      "Codex can wrongly deduct JetBrains credits after a ChatGPT login (third-party report, unconfirmed).",
+      "AI Pro comes with All Products Pack and dotUltimate, but not with free student or open-source licenses."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Licensing and subscriptions",
+      "url": "https://www.jetbrains.com/help/ai-assistant/licensing-and-subscriptions.html",
+      "official": true
+    },
+    {
+      "label": "JetBrains AI FAQ",
+      "url": "https://lp.jetbrains.com/ai-ides-faq/",
+      "official": true
+    },
+    {
+      "label": "JetBrains AI",
+      "url": "https://www.jetbrains.com/ai-ides/",
+      "official": true
+    }
+  ]
+}

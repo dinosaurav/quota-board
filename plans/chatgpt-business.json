@@ -1,0 +1,187 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "chatgpt-business",
+  "name": "ChatGPT Business (Standard seat)",
+  "vendor": "OpenAI",
+  "status": "active",
+  "price": {
+    "amount": 25,
+    "currency": "USD",
+    "period": "month",
+    "note": "Per seat, billed monthly. $20 per seat per month billed annually."
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "codex",
+    "tiers": [
+      "team",
+      "self_serve_business_usage_based"
+    ]
+  },
+  "check": {
+    "label": "Codex usage page, or /status in the CLI",
+    "url": "https://chatgpt.com/codex/settings/usage"
+  },
+  "meters": [
+    {
+      "id": "chatgpt-5h",
+      "label": "Codex 5-hour window",
+      "hint": "Same per-model ranges as Plus",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "A 5-hour window. The usage API and Settings → Usage show the exact reset time.",
+        "stipulations": [
+          "Codex and ChatGPT Work share this allowance.",
+          "Local messages and cloud tasks share it. A cloud task may use more than a local message.",
+          "Bigger tasks and stronger models use more. OpenAI publishes ranges per model, not fixed counts.",
+          "Fast mode spends it at 2x on GPT-6.2 Astra and GPT-6.2 Sol, and at 2.5x on other models.",
+          "GitHub code reviews (@codex on a PR, or automatic reviews) are metered as Code Review usage. Local /review runs count here like any other task."
+        ]
+      }
+    },
+    {
+      "id": "chatgpt-week",
+      "label": "Codex + Work weekly",
+      "hint": "Applies on top of the 5-hour window",
+      "period": "week",
+      "reset": {
+        "type": "rolling-weekly",
+        "rule": "A 7-day window. The usage API and Settings → Usage show the exact reset time.",
+        "stipulations": [
+          "Everything that counts toward the 5-hour window also counts here.",
+          "OpenAI doesn't publish the weekly size.",
+          "Workspaces created 23 to 30 Nov 2026 get double the weekly allowance through 31 Dec 2026."
+        ]
+      }
+    }
+  ],
+  "resets": [
+    {
+      "id": "chatgpt-limit-reset",
+      "label": "Banked Codex resets",
+      "count": {
+        "rule": "Given out in OpenAI promotions, including some referral offers. The usage API reports how many you hold and how many you can use right now."
+      },
+      "expires": null,
+      "howTo": "Desktop app: Settings → Usage & billing, select the reset and confirm. CLI: /usage, then Redeem reset.",
+      "stipulations": [
+        "Free. Each reset has its own expiry date, shown in your account or the offer.",
+        "On Business Standard it restores the 5-hour and weekly allowances to 100%.",
+        "You can only use one when the 5-hour or weekly allowance has less than 80% left.",
+        "Unused or expired resets aren't refunded or replaced."
+      ]
+    }
+  ],
+  "overage": "At a limit, usage can continue on workspace credits if an admin has bought them. Credit purchases are optional. Paid instant resets aren't available on Business.",
+  "card": {
+    "how": [
+      "Codex has a 5-hour window and a weekly window, the same per-model ranges as Plus.",
+      "Includes ChatGPT, ChatGPT Work and Codex, with cloud tasks on larger VMs.",
+      "15 Pro messages per month, shared between GPT-6 Pro and GPT-5.6 Sol Pro.",
+      "Up to $500 per month in API credits for the workspace. Unused credits expire at the end of the billing cycle."
+    ],
+    "ext": [
+      "OpenAI models only.",
+      "The Codex extension works in most VS Code forks, including Cursor."
+    ],
+    "quirks": [
+      "OpenAI doesn't train on workspace data.",
+      "Ultrafast isn't available on Business.",
+      "The pricing page says Business starts at 2 users. The Business FAQ says you can start with 1 paid seat.",
+      "Workspaces created before 24 Jun 2026 may still have legacy Codex-only seats, which run on workspace credits from the first request.",
+      "The Codex usage API reports \"team\" or \"self_serve_business_usage_based\" for this seat. \"business\" means Enterprise there."
+    ]
+  },
+  "modelTable": {
+    "title": "Codex on Business Standard: local messages per 5 hours",
+    "note": "OpenAI's estimates at Standard speed, the same as Plus. Big tasks land at the low end.",
+    "columns": [
+      "Model",
+      "Messages / 5h"
+    ],
+    "rows": [
+      [
+        "GPT-6 Luna",
+        "350-3,000"
+      ],
+      [
+        "GPT-6.1 Terra",
+        "35-285"
+      ],
+      [
+        "GPT-6.2 Sol",
+        "17-180"
+      ],
+      [
+        "GPT-6.1 Sol",
+        "15-160"
+      ],
+      [
+        "GPT-6 Sol",
+        "15-150"
+      ],
+      [
+        "GPT-6.2 Astra",
+        "6-50"
+      ],
+      [
+        "GPT-6 Astra",
+        "5-45"
+      ]
+    ],
+    "footer": "A weekly limit applies on top. OpenAI doesn't publish its size."
+  },
+  "events": [
+    {
+      "date": "2026-11-30",
+      "what": "Last day to create a Business workspace and get 2x weekly Work and Codex usage plus Fast mode at no extra cost for all seats. Existing and reactivated workspaces don't qualify."
+    },
+    {
+      "date": "2026-12-01",
+      "what": "Starting in December, ChatGPT and Codex share one token-based allowance on Plus, Pro and Business. Instant chat won't count. OpenAI gives no exact date and some accounts may switch earlier.",
+      "source": "https://help.openai.com/en/articles/20001625-understand-chatgpt-and-codex-usage-limits"
+    },
+    {
+      "date": "2026-12-31",
+      "what": "The new-workspace 2x weekly usage and free Fast mode promo ends."
+    }
+  ],
+  "sources": [
+    {
+      "label": "ChatGPT Business pricing",
+      "url": "https://openai.com/business/pricing/",
+      "official": true
+    },
+    {
+      "label": "ChatGPT Business models and limits",
+      "url": "https://help.openai.com/en/articles/12003714-chatgpt-business-models-and-limits",
+      "official": true
+    },
+    {
+      "label": "ChatGPT Business FAQ",
+      "url": "https://help.openai.com/en/articles/8792828-chatgpt-business-faq",
+      "official": true
+    },
+    {
+      "label": "Codex pricing",
+      "url": "https://learn.chatgpt.com/docs/pricing",
+      "official": true
+    },
+    {
+      "label": "Codex rate card",
+      "url": "https://help.openai.com/en/articles/20001106-codex-rate-card",
+      "official": true
+    },
+    {
+      "label": "How resets work in Codex",
+      "url": "https://help.openai.com/en/articles/20001498-how-resets-work-in-codex",
+      "official": true
+    },
+    {
+      "label": "Understand ChatGPT and Codex usage limits",
+      "url": "https://help.openai.com/en/articles/20001625-understand-chatgpt-and-codex-usage-limits",
+      "official": true
+    }
+  ]
+}

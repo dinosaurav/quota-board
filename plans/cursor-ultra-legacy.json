@@ -1,0 +1,142 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "cursor-ultra-legacy",
+  "name": "Cursor Ultra (legacy)",
+  "vendor": "Cursor",
+  "status": "legacy",
+  "price": {
+    "amount": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "cursor",
+    "tiers": [
+      "ultra"
+    ]
+  },
+  "check": {
+    "label": "Dashboard → Usage / Spending",
+    "url": "https://cursor.com/dashboard"
+  },
+  "meters": [
+    {
+      "id": "cursor-own",
+      "label": "Cursor models pool",
+      "hint": "Grok 4.5 to 4.7, Composer 2.5, Auto",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets on your monthly billing date.",
+        "stipulations": [
+          "Covers Grok 4.7, Grok 4.6, Grok 4.5 and Composer 2.5.",
+          "Auto draws from this pool unless it routes to a third-party model.",
+          "Unused usage doesn't roll over.",
+          "Cursor's usage API reports the exact cycle end."
+        ]
+      }
+    },
+    {
+      "id": "cursor-other",
+      "label": "Third-party models pool",
+      "hint": "Claude, GPT, Gemini at API price",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets on your monthly billing date.",
+        "stipulations": [
+          "Each request is charged at that model's API list price.",
+          "Auto draws from this pool when it routes to a third-party model.",
+          "A subagent that names a third-party model draws from this pool, even when the parent chat uses Auto, Grok or Composer.",
+          "Cursor sometimes adds bonus usage on top of the included amount."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "On-demand usage bills monthly in arrears at API rates, up to the spend limit set at cursor.com/dashboard/spending. It's off by default; quota-board shows whether yours is on.",
+  "card": {
+    "how": [
+      "Two monthly pools that reset with your billing cycle: Cursor's own models, and third-party models at API price.",
+      "Tab completions are unlimited.",
+      "Includes Bugbot, Cloud Agents, Automations, Origin and the SDK."
+    ],
+    "ext": [
+      "Third-party models (Claude, GPT, Gemini) are included through the third-party pool at API list price, with no markup."
+    ],
+    "quirks": [
+      "Cursor Ultra (legacy) is no longer sold. Your plan, price and features continue until you switch or cancel.",
+      "Switching to a new plan is permanent and Support can't reverse it. You lose the included third-party pool, on-demand billing and the monthly reset. Third-party models then cost API price from the first request, paid from prepaid credit. The comparable new plan is the new Ultra ($200), which is a different plan with no third-party allowance.",
+      "If you switch, any unbilled on-demand usage is invoiced first, the old plan is refunded pro rata, and a new billing cycle starts that day.",
+      "Cursor doesn't publish the pool sizes, only that they are the largest of the legacy individual plans. Earlier pricing put them at 20x Pro (third-party report, unconfirmed).",
+      "Upgrades between Pro, Pro+ and Ultra apply at once. Downgrades apply at the end of the billing period.",
+      "Bugbot bills from included usage first, then from on-demand usage if it's on.",
+      "Billing settings may show limited-time offers for switching. Cursor doesn't publish their terms.",
+      "The new Ultra uses the same name and price but is a different plan. Check which one you have before comparing numbers."
+    ],
+    "alert": "Ends 30 Nov 2026: Gemini 4 Carbon intro pricing."
+  },
+  "events": [
+    {
+      "date": "2026-11-21",
+      "what": "GPT-5.6 Sol promotional pricing ended."
+    },
+    {
+      "date": "2026-11-30",
+      "what": "Gemini 4 Carbon intro pricing ends. From 1 Dec it costs $4 in, $0.20 cache read, $20 out per 1M tokens."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Legacy Cursor plans",
+      "url": "https://cursor.com/docs/account/pricing/legacy-cursor-plans",
+      "official": true
+    },
+    {
+      "label": "Cursor pricing docs",
+      "url": "https://cursor.com/docs/account/pricing",
+      "official": true
+    },
+    {
+      "label": "Usage limits",
+      "url": "https://cursor.com/help/models-and-usage/usage-limits",
+      "official": true
+    },
+    {
+      "label": "Usage-based charges",
+      "url": "https://cursor.com/help/account-and-billing/overages",
+      "official": true
+    },
+    {
+      "label": "Spend limits",
+      "url": "https://cursor.com/help/account-and-billing/spend-limits",
+      "official": true
+    },
+    {
+      "label": "Models and pricing",
+      "url": "https://cursor.com/docs/models-and-pricing",
+      "official": true
+    },
+    {
+      "label": "The X Subscription (Cursor help)",
+      "url": "https://cursor.com/help/the-x-subscription/overview",
+      "official": true
+    },
+    {
+      "label": "Cursor pricing",
+      "url": "https://cursor.com/pricing",
+      "official": true
+    },
+    {
+      "label": "Introducing The X Subscription (Cursor forum)",
+      "url": "https://forum.cursor.com/t/introducing-the-x-subscription/174450",
+      "official": true
+    },
+    {
+      "label": "Bugbot billing",
+      "url": "https://cursor.com/help/account-and-billing/bugbot-usage-based-billing",
+      "official": true
+    }
+  ]
+}

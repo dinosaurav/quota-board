@@ -1,0 +1,101 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "alibaba-coding-plan-pro",
+  "name": "Alibaba Coding Plan Pro",
+  "vendor": "Alibaba Cloud",
+  "status": "active",
+  "price": {
+    "amount": 50,
+    "currency": "USD",
+    "period": "month",
+    "note": "$50 a month, monthly only. China (Bailian): ¥200 a month, with ¥39.90 for the first month for new subscribers."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Model Studio console: Coding Plan",
+    "url": "https://modelstudio.console.alibabacloud.com/ap-southeast-1/subscription/coding-plan"
+  },
+  "meters": [
+    {
+      "id": "alibaba-5h",
+      "label": "5-hour window",
+      "hint": "6,000 requests per 5 hours",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "A sliding 5-hour window. Each minute, the usage from 5 hours earlier is released.",
+        "stipulations": [
+          "Counts model calls, not tokens. A simple task is about 5 to 10 calls and a complex one 10 to 30 or more.",
+          "Every tool on your key shares this window."
+        ]
+      }
+    },
+    {
+      "id": "alibaba-week",
+      "label": "Weekly",
+      "hint": "45,000 requests per week",
+      "period": "week",
+      "reset": {
+        "type": "fixed-weekly-utc",
+        "rule": "Resets Monday 00:00 UTC+8, which is Sunday 16:00 UTC.",
+        "stipulations": [
+          "Everything that counts toward the 5-hour window also counts here."
+        ]
+      }
+    },
+    {
+      "id": "alibaba-month",
+      "label": "Monthly",
+      "hint": "90,000 requests per month",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets at 00:00 UTC+8 on your subscription day each month.",
+        "stipulations": [
+          "A subscription runs from purchase to 23:59:59 UTC+8 on the same day next month.",
+          "All three limits apply at once. Whichever you hit first stops you."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "None. Calls fail until the window resets, and nothing switches to paid use. Under load, requests can also be queued or throttled; a 429 means wait a minute.",
+  "card": {
+    "how": [
+      "Three request limits at once: 6,000 per 5 hours, 45,000 per week and 90,000 per month.",
+      "Requests are counted per model call, so long prompts cost the same as short ones.",
+      "Slots are limited. New slots open daily at 00:00 UTC+8 (international) and 09:30 UTC+8 (China)."
+    ],
+    "ext": [
+      "Models from other labs: kimi-k2.5, glm-5 and MiniMax-M2.5, alongside qwen3.7-plus, qwen3.6-plus and qwen3.5-plus. Models not on the list are unsupported.",
+      "Claude Code: https://coding-intl.dashscope.aliyuncs.com/apps/anthropic. OpenAI-compatible tools (Qwen Code, OpenCode, Cursor, Codex, Cline, Kilo CLI): https://coding-intl.dashscope.aliyuncs.com/v1.",
+      "Only Chat Completions and Anthropic Messages work. The OpenAI Responses API and Claude Code Agent Teams are not supported."
+    ],
+    "quirks": [
+      "Plan keys start with sk-sp-. A normal sk- key or a non-coding base URL bills pay-as-you-go instead. This is the most common cause of surprise charges.",
+      "Interactive coding tools only. Scripts, backends, batch jobs, Postman or Dify can get the plan suspended or the key revoked.",
+      "One Coding Plan per account. No sharing, no refunds and no downgrades.",
+      "The console shows total used and remaining only, with no per-model or token figures.",
+      "Lite is no longer sold. Renewals ended 13 Apr 2026 and Lite can't be upgraded to Pro.",
+      "The free Qwen Code OAuth tier closed on 15 Apr 2026. Qwen Code now points to this plan or your own API key."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Coding Plan",
+      "url": "https://www.alibabacloud.com/help/en/model-studio/coding-plan",
+      "official": true
+    },
+    {
+      "label": "Coding Plan FAQ",
+      "url": "https://www.alibabacloud.com/help/en/model-studio/coding-plan-faq",
+      "official": true
+    },
+    {
+      "label": "Coding Plan overview (China)",
+      "url": "https://help.aliyun.com/zh/model-studio/coding-plan-overview",
+      "official": true
+    }
+  ]
+}

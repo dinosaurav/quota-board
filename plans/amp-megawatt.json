@@ -1,0 +1,104 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "amp-megawatt",
+  "name": "Amp Megawatt",
+  "vendor": "Amp",
+  "status": "active",
+  "price": {
+    "amount": 20,
+    "currency": "USD",
+    "period": "month",
+    "note": "Students and teachers pay $10."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Amp settings",
+    "url": "https://ampcode.com/settings"
+  },
+  "meters": [
+    {
+      "id": "amp-usage-month",
+      "label": "Included agent usage",
+      "hint": "ampcode.com/settings, or run amp usage in the CLI.",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets at the end of each monthly billing period.",
+        "stipulations": [
+          "Models are charged at the provider's API price with no markup.",
+          "Web search and other tools also spend usage.",
+          "The first message after switching models costs more, because prompt caches are per model.",
+          "Use through a linked ChatGPT or Claude subscription, or your own key, doesn't count.",
+          "Unused usage doesn't carry over."
+        ]
+      }
+    },
+    {
+      "id": "amp-orbs-month",
+      "label": "Hosted orb minutes",
+      "hint": "45,000 minutes (750 hours) a month. ampcode.com/settings.",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets at the end of each monthly billing period.",
+        "stipulations": [
+          "Billed per minute by orb size. A paused orb costs nothing.",
+          "An orb pauses 5 minutes after the agent stops or 20 minutes after your last message, whichever is later.",
+          "Self-hosted orbs and runners are free and don't count."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "At the limit, add paid credits, link a ChatGPT or Claude subscription, or upgrade. Purchased credits last 12 months. Amp doesn't publish a per-credit price or an auto-reload option.",
+  "card": {
+    "how": [
+      "$20 a month for Amp credits on any model plus 45,000 minutes of hosted orbs.",
+      "Amp doesn't publish the dollar amount of included agent usage."
+    ],
+    "ext": [
+      "Bring your own key on any tier: OpenRouter, Bedrock, Google Cloud, Azure Foundry, Ollama Cloud, OpenCode Go and custom endpoints.",
+      "Link a ChatGPT subscription for OpenAI models or a Claude subscription for Claude models. Amp doesn't bill that use.",
+      "Runs as a CLI and as desktop and mobile apps."
+    ],
+    "quirks": [
+      "Megawatt includes $20 of agent usage (third-party report, unconfirmed).",
+      "The free Hobby plan has every feature if you bring your own keys or subscriptions. Megawatt pays for Amp-hosted models and orbs.",
+      "Megawatt 50 ($50, 2.5x the usage) shows only after you sign in.",
+      "Since 12 Nov 2026 a model selector replaced the Dial. Old Dial settings didn't carry over."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Amp pricing",
+      "url": "https://ampcode.com/pricing",
+      "official": true
+    },
+    {
+      "label": "Amp pricing docs",
+      "url": "https://ampcode.com/docs/pricing",
+      "official": true
+    },
+    {
+      "label": "Orb sizes and costs",
+      "url": "https://ampcode.com/docs/orbs/sizes-and-costs",
+      "official": true
+    },
+    {
+      "label": "Free agent (news)",
+      "url": "https://ampcode.com/news/free-agent",
+      "official": true
+    },
+    {
+      "label": "Bye Bye, Dial (news)",
+      "url": "https://ampcode.com/news/bye-bye-dial",
+      "official": true
+    },
+    {
+      "label": "Amp subscriptions (news)",
+      "url": "https://ampcode.com/news/subscriptions",
+      "official": true
+    }
+  ]
+}

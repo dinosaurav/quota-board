@@ -1,0 +1,33 @@
+name: Plan update
+description: A plan is missing, a limit changed, or a promo started or ended.
+labels: [plan-update]
+body:
+  - type: markdown
+    attributes:
+      value: Paste the output of `quota-board report` below if you have it. It contains no personal details.
+  - type: input
+    id: plan
+    attributes:
+      label: Plan
+      description: Provider and plan name, e.g. "GitHub Copilot Pro+"
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What's wrong or missing
+      description: The limit, reset rule, price, promo or model access, and what it should say.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Links to the provider's own pages. Say if a source is third-party.
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: quota-board report output
+      render: markdown

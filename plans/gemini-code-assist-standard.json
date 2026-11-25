@@ -1,0 +1,87 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "gemini-code-assist-standard",
+  "name": "Gemini Code Assist Standard",
+  "vendor": "Google",
+  "status": "legacy",
+  "price": {
+    "amount": 22.8,
+    "currency": "USD",
+    "period": "month",
+    "note": "Per user, monthly commitment. $19 per user per month on a 12-month commitment."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Google Cloud console",
+    "url": "https://console.cloud.google.com/"
+  },
+  "meters": [
+    {
+      "id": "gca-day",
+      "label": "Agent mode + Gemini CLI, daily",
+      "hint": "1,500 requests per day; enter by hand",
+      "period": "day",
+      "reset": {
+        "type": "daily",
+        "rule": "Resets at midnight Pacific time with other Google Cloud daily quotas.",
+        "stipulations": [
+          "Agent mode in the IDE and Gemini CLI share this one daily pool.",
+          "One prompt can make several model requests.",
+          "At the limit, no model can be used through these tools until the reset.",
+          "There is also a limit of 120 requests per minute."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "No paid overage. Requests stop until the daily reset.",
+  "card": {
+    "how": [
+      "Up to 1,500 agent-mode and Gemini CLI requests per user per day, and 120 per minute.",
+      "Code completion and generation have a separate limit of 6,000 requests per day.",
+      "Gemini Code Assist on GitHub reviews at least 100 pull requests per day per installation."
+    ],
+    "ext": [
+      "Gemini models only, and support is limited to the Gemini 3.x family.",
+      "Gemini CLI and the IDE extensions keep working with this license. The June 2026 cutoff applied only to consumer accounts."
+    ],
+    "quirks": [
+      "No longer sold since 9 Oct 2026. Google recommends moving to Gemini Enterprise, which includes Antigravity.",
+      "Annual subscriptions can renew until 31 Jan 2027 and monthly ones until 31 Dec 2027. You can add licenses until 31 Jan 2027.",
+      "There is no usage readout for the daily limit, so enter readings by hand."
+    ]
+  },
+  "events": [
+    {
+      "date": "2027-01-31",
+      "what": "Last day to renew an annual subscription or add licenses."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Gemini Code Assist quotas",
+      "url": "https://docs.cloud.google.com/gemini/docs/quotas",
+      "official": true
+    },
+    {
+      "label": "Gemini Code Assist sunset",
+      "url": "https://docs.cloud.google.com/gemini/docs/codeassist/sunset",
+      "official": true
+    },
+    {
+      "label": "Gemini for Google Cloud deprecations",
+      "url": "https://docs.cloud.google.com/gemini/docs/deprecations/features",
+      "official": true
+    },
+    {
+      "label": "Gemini for Google Cloud pricing",
+      "url": "https://cloud.google.com/gemini/pricing",
+      "official": true
+    },
+    {
+      "label": "Google Cloud quotas overview",
+      "url": "https://docs.cloud.google.com/docs/quotas/overview",
+      "official": true
+    }
+  ]
+}

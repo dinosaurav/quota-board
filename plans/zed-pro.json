@@ -1,0 +1,76 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "zed-pro",
+  "name": "Zed Pro",
+  "vendor": "Zed Industries",
+  "status": "active",
+  "price": {
+    "amount": 10,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Zed dashboard → Billing",
+    "url": "https://dashboard.zed.dev"
+  },
+  "meters": [
+    {
+      "id": "zed-tokens-month",
+      "label": "Token credit",
+      "hint": "$5 a month. dashboard.zed.dev → Billing.",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets on your monthly billing date.",
+        "stipulations": [
+          "Hosted models cost the provider's list price plus 10%.",
+          "Edit predictions are unlimited and don't spend credit.",
+          "Claude Fable 5.2 fast mode doubles its rates.",
+          "Your own keys and external agents don't spend credit.",
+          "The docs don't say whether unused credit carries over."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Past $5, usage bills at list price plus 10%, charged at month end or every $10, whichever comes first. Overage is on by default, up to a $10 spend limit. Set the limit to $0 to turn it off. At the limit, hosted models stop until the next cycle.",
+  "card": {
+    "how": [
+      "$5 of hosted-model tokens a month, at list price plus 10%.",
+      "Unlimited edit predictions."
+    ],
+    "ext": [
+      "Hosted Claude, GPT and Gemini models. Hosted xAI models were removed on 15 May 2026.",
+      "Your own API keys, Ollama and GitHub Copilot work on any plan and don't use Zed credit.",
+      "External agents (Claude Agent, Codex, Gemini CLI, any ACP agent) run in Zed at no charge and bill through your own account with that provider."
+    ],
+    "quirks": [
+      "The 14-day trial gives $5 of GPT-6 Luna only, and ends early if the $5 runs out.",
+      "Zed Business ($30 a seat) has no bundled credit."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Zed pricing",
+      "url": "https://zed.dev/pricing",
+      "official": true
+    },
+    {
+      "label": "Plans and usage",
+      "url": "https://zed.dev/docs/ai/plans-and-usage",
+      "official": true
+    },
+    {
+      "label": "Zed models",
+      "url": "https://zed.dev/docs/ai/models",
+      "official": true
+    },
+    {
+      "label": "External agents",
+      "url": "https://zed.dev/docs/ai/external-agents",
+      "official": true
+    }
+  ]
+}

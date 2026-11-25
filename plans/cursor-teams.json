@@ -1,0 +1,181 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "cursor-teams",
+  "name": "Cursor Teams",
+  "vendor": "Cursor",
+  "status": "active",
+  "price": {
+    "amount": 30,
+    "currency": "USD",
+    "period": "month",
+    "note": "Per seat. Premium seats $30, Super $100, Ultra $200. Tiers can be mixed on one team."
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "cursor",
+    "tiers": []
+  },
+  "check": {
+    "label": "Grok dashboard → Usage",
+    "url": "https://grok.com/dashboard"
+  },
+  "meters": [
+    {
+      "id": "cursor-week",
+      "label": "Weekly pool",
+      "hint": "Grok 4.5 to 4.7 and Composer 2.5, shared with the Grok apps",
+      "period": "week",
+      "reset": {
+        "type": "fixed-weekly-account",
+        "rule": "Resets once a week. The next reset time is shown under Usage at grok.com/dashboard and in Cursor's settings.",
+        "stipulations": [
+          "Covers Grok 4.7, Grok 4.6, Grok 4.5 and Composer 2.5. Third-party models never draw from it.",
+          "One pool is shared by Agent in the editor, the CLI, Cloud Agents, Grok Bot and the Grok apps.",
+          "Each model drains the pool at a different rate. Cursor doesn't publish the pool size or the rates.",
+          "Unused usage doesn't roll over.",
+          "Each paid seat has its own pool. Seats don't share usage and it can't move between members.",
+          "A Super seat's pool is 3.75x a Premium seat's. An Ultra seat's is 12.5x.",
+          "The reset isn't at a fixed weekday or hour. It falls 7 days after you joined the plan (third-party report, unconfirmed).",
+          "quota-board's Cursor collector doesn't read this pool yet. Enter readings by hand from the dashboard."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Usage past a seat's weekly pool, and all third-party model usage, is paid from the team's shared prepaid balance. Admins set one monthly additional usage limit for the team, a default per-member limit and per-member overrides. When a limit is hit, paid usage pauses for that member even if credit remains; included weekly usage keeps working. Paid usage also stops when the balance runs out. Only admins can change limits or Auto Top-up.",
+  "card": {
+    "how": [
+      "Each seat gets its own weekly pool for Cursor's own models (Grok 4.5 to 4.7, Composer 2.5), sized by the seat tier.",
+      "With Cursor Router on, Auto offers Balance and Intelligence modes. They bill at the routed model's price: Cursor models from the pool, third-party models from the prepaid balance.",
+      "Cost mode bills as a Cursor-model request and draws from the weekly pool whatever model serves it."
+    ],
+    "ext": [
+      "Third-party models are billed at API list price plus a Cursor Token Rate of $0.25 per 1M tokens, from the prepaid balance.",
+      "The Token Rate doesn't apply to Cursor models, Cost mode, or third-party models whose cache-read price is under $0.10 per 1M tokens on every tier.",
+      "Requests with your own API key can still carry the Token Rate on Teams."
+    ],
+    "quirks": [
+      "Plus isn't available for teams.",
+      "Teams created before the change keep legacy Standard ($40) or Premium ($120) seats with two monthly pools and on-demand usage on by default. They switch at cursor.com/unify/team.",
+      "Bugbot reviews on Teams are charged from paid usage, not the weekly pool.",
+      "Only Enterprise pools usage across seats.",
+      "quota-board can't tell a team seat's tier from the collector yet."
+    ]
+  },
+  "modelTable": {
+    "title": "Cursor models: pay-as-you-go rates past the weekly pool",
+    "note": "These models draw from the weekly pool first. Cursor doesn't publish how fast each one drains the pool. Past the pool, prepaid credit pays these rates per 1M tokens.",
+    "columns": [
+      "Model",
+      "Input $",
+      "Cache read $",
+      "Output $"
+    ],
+    "rows": [
+      [
+        "Composer 2.5",
+        0.5,
+        0.2,
+        2.5
+      ],
+      [
+        "Composer 2.5 (Fast)",
+        3,
+        0.5,
+        15
+      ],
+      [
+        "Grok 4.7",
+        2,
+        0.5,
+        6
+      ],
+      [
+        "Grok 4.7 (Fast)",
+        4,
+        1,
+        12
+      ],
+      [
+        "Grok 4.6",
+        2,
+        0.5,
+        6
+      ],
+      [
+        "Grok 4.5",
+        2,
+        0.5,
+        6
+      ]
+    ],
+    "footer": "Grok 4.7 input over 256k tokens is billed at 2x, up to 500k. Fast long context is 3x."
+  },
+  "events": [
+    {
+      "date": "2026-11-21",
+      "what": "GPT-5.6 Sol promotional pricing ended."
+    },
+    {
+      "date": "2026-11-30",
+      "what": "Gemini 4 Carbon intro pricing ends. From 1 Dec it costs $4 in, $0.20 cache read, $20 out per 1M tokens."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Teams pricing",
+      "url": "https://cursor.com/docs/account/teams/pricing",
+      "official": true
+    },
+    {
+      "label": "Cursor pricing",
+      "url": "https://cursor.com/pricing",
+      "official": true
+    },
+    {
+      "label": "Cursor pricing docs",
+      "url": "https://cursor.com/docs/account/pricing",
+      "official": true
+    },
+    {
+      "label": "Pricing and plans (help)",
+      "url": "https://cursor.com/help/account-and-billing/pricing",
+      "official": true
+    },
+    {
+      "label": "Spend limits",
+      "url": "https://cursor.com/help/account-and-billing/spend-limits",
+      "official": true
+    },
+    {
+      "label": "Usage-based charges",
+      "url": "https://cursor.com/help/account-and-billing/overages",
+      "official": true
+    },
+    {
+      "label": "Models and pricing",
+      "url": "https://cursor.com/docs/models-and-pricing",
+      "official": true
+    },
+    {
+      "label": "Usage limits",
+      "url": "https://cursor.com/help/models-and-usage/usage-limits",
+      "official": true
+    },
+    {
+      "label": "Bugbot billing",
+      "url": "https://cursor.com/help/account-and-billing/bugbot-usage-based-billing",
+      "official": true
+    },
+    {
+      "label": "Introducing The X Subscription (x.ai)",
+      "url": "https://x.ai/news/x-subscription",
+      "official": true
+    },
+    {
+      "label": "Cursor usage limits: the weekly pool (DEV Community)",
+      "url": "https://dev.to/edtrackai/cursor-usage-limits-the-weekly-pool-legacy-plans-and-when-they-reset-31pf",
+      "official": false
+    }
+  ]
+}

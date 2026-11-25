@@ -1,0 +1,125 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "zai-glm-coding-lite",
+  "name": "GLM Coding Plan Lite",
+  "vendor": "Z.ai",
+  "status": "active",
+  "price": {
+    "amount": 18,
+    "currency": "USD",
+    "period": "month",
+    "note": "Third-party price. Quarterly billing is 20% off and yearly 30% off. Confirm at z.ai/subscribe."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Z.ai → Plan Overview",
+    "url": "https://z.ai/manage-apikey/billing"
+  },
+  "meters": [
+    {
+      "id": "glm-5h",
+      "label": "5-hour credits",
+      "hint": "2,000 credits. z.ai → Plan Overview.",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "Credits come back 5 hours after you spend them.",
+        "stipulations": [
+          "Credits per request are (input tokens x input rate + cached tokens x cached rate + output tokens x output rate) / 10,000.",
+          "Rates (input / cached / output): GLM-5.4 4.6 / 1.1 / 16, GLM-5.3 6.9 / 1.7 / 24, GLM-5.3-Flash 1.15 / 0.28 / 4 until 24 Dec, then 2.3 / 0.56 / 8.",
+          "Off-peak use costs half. Peak is Monday to Friday 14:00 to 18:00 Singapore time (06:00 to 10:00 UTC). Weekends are off-peak.",
+          "MCP tools (web search, web reader, Zread) cost 1.2 credits a call. Vision uses the GLM-5.3-Flash rate. There is no separate quota for any of them."
+        ]
+      }
+    },
+    {
+      "id": "glm-week",
+      "label": "Weekly credits",
+      "hint": "10,000 credits. z.ai → Plan Overview.",
+      "period": "week",
+      "reset": {
+        "type": "fixed-weekly-account",
+        "rule": "Resets every 7 days, counted from your subscription date.",
+        "stipulations": [
+          "A request needs room in both the 5-hour and the weekly allowance."
+        ]
+      }
+    }
+  ],
+  "resets": [
+    {
+      "id": "glm-reset-card",
+      "label": "Quota Reset Card",
+      "count": {
+        "rule": "Given out now and then in Z.ai campaigns. There are two kinds: a 5-hour card and a weekly card."
+      },
+      "expires": null,
+      "howTo": "Look for it on the Plan Overview page. Z.ai doesn't document the steps.",
+      "stipulations": [
+        "A 5-hour card restores the 5-hour quota.",
+        "A weekly card restores the weekly quota and the 5-hour quota.",
+        "Using a card restarts that window's cycle from the moment you use it.",
+        "Each card has its own expiry date."
+      ]
+    }
+  ],
+  "overage": "At a limit, calls stop until that window refreshes. The plan never charges your account balance, and there's no paid overage.",
+  "card": {
+    "how": [
+      "2,000 credits per 5 hours and 10,000 per week, spent per token on GLM models.",
+      "Off-peak hours and weekends cost half."
+    ],
+    "ext": [
+      "GLM models only: GLM-5.4, GLM-5.3 and GLM-5.3-Flash.",
+      "Works in Claude Code, Codex, OpenCode, Cline and other tools on Z.ai's supported list. Using it in unsupported tools or as a general API can get you rate-limited, frozen or banned.",
+      "Claude Code and Goose use https://api.z.ai/api/anthropic. Other tools use https://api.z.ai/api/coding/paas/v4."
+    ],
+    "quirks": [
+      "Non-refundable. Z.ai's FAQ says cancel at least 24 hours before renewal, but its usage policy says 3 days. Allow 3 days.",
+      "The plan moved from prompt counts to credits on 30 July 2026. Legacy plans keep their terms until their billing cycle ends.",
+      "One user per subscription; no account sharing.",
+      "Price is from third-party sites because Z.ai's subscribe page didn't load.",
+      "In Claude Code, Z.ai's documented settings send every model slot to GLM-5.3-Flash. Set glm-5.4[1m] yourself to use GLM-5.4, then open a new terminal.",
+      "GLM-5.4 shows a 1M context and adds vision (third-party report, unconfirmed)."
+    ],
+    "alert": "Until 24 Dec 2026: GLM-5.3-Flash costs half."
+  },
+  "events": [
+    {
+      "date": "2026-12-24",
+      "what": "GLM-5.3-Flash half-price promo (from 24 Nov) ends."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GLM Coding Plan overview",
+      "url": "https://docs.z.ai/devpack/overview",
+      "official": true
+    },
+    {
+      "label": "GLM Coding Plan FAQ",
+      "url": "https://docs.z.ai/devpack/faq",
+      "official": true
+    },
+    {
+      "label": "Usage revision notice",
+      "url": "https://docs.z.ai/devpack/notice/usage-revision",
+      "official": true
+    },
+    {
+      "label": "Usage policy",
+      "url": "https://docs.z.ai/devpack/usage-policy",
+      "official": true
+    },
+    {
+      "label": "Coding plan price comparison",
+      "url": "https://www.morphllm.com/coding-plan",
+      "official": false
+    },
+    {
+      "label": "Claude Code setup",
+      "url": "https://docs.z.ai/devpack/tool/claude",
+      "official": true
+    }
+  ]
+}

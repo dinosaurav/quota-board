@@ -1,0 +1,76 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "kilo-pass-starter",
+  "name": "Kilo Pass Starter",
+  "vendor": "Kilo Code",
+  "status": "active",
+  "price": {
+    "amount": 19,
+    "currency": "USD",
+    "period": "month",
+    "note": "Pro is $49 and Expert $199, with the same rules."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Kilo profile",
+    "url": "https://app.kilo.ai/profile"
+  },
+  "meters": [
+    {
+      "id": "kilo-credits-month",
+      "label": "Monthly credits",
+      "hint": "$19 of paid credit plus a bonus. app.kilo.ai/profile.",
+      "period": "month",
+      "reset": {
+        "type": "paid-period",
+        "rule": "A new $19 allotment arrives at each monthly renewal.",
+        "stipulations": [
+          "Credits are spent at exact provider rates across 500+ models.",
+          "Each paid allotment lasts one year, so unused credit carries over. The credit that expires first is spent first.",
+          "Bonus credit arrives only after that month's paid credit is used, and expires at month end.",
+          "Monthly billing bonus: 10% in month 1, 50% in month 2, then a streak that reaches 40% by month 8. Yearly billing gets 50% every month.",
+          "Cloud Agent time costs $0.60 to $1.20 an hour. Code Review costs $0.33 an hour."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Past your credits, buy one-time top-ups or set auto top-up at a balance threshold. Top-ups last one year. A 5% processing fee applies to every credit purchase.",
+  "card": {
+    "how": [
+      "Prepaid API credit with a bonus, not a rate-limited plan. $19 buys $19 of usage plus up to 40% on monthly billing."
+    ],
+    "ext": [
+      "Claude, GPT, Gemini and open models through Kilo Gateway at provider cost.",
+      "Works in Kilo's VS Code and JetBrains extensions, CLI, Cloud Agents and Code Reviewer.",
+      "Bring your own Anthropic, OpenAI, Google, Azure or Bedrock key. That use doesn't touch credits."
+    ],
+    "quirks": [
+      "Credits bought through Apple in-app purchase never expire.",
+      "Annual and team plans are excluded from referral bonuses."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Kilo Pass",
+      "url": "https://kilo.ai/pricing/kilo-pass",
+      "official": true
+    },
+    {
+      "label": "Kilo pricing",
+      "url": "https://kilo.ai/pricing",
+      "official": true
+    },
+    {
+      "label": "Adding credits",
+      "url": "https://kilo.ai/docs/getting-started/adding-credits",
+      "official": true
+    },
+    {
+      "label": "Kilo Pass referral terms",
+      "url": "https://kilo.ai/refer/terms/pass",
+      "official": true
+    }
+  ]
+}

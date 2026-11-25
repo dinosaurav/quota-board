@@ -1,0 +1,103 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "supergrok",
+  "name": "SuperGrok",
+  "vendor": "xAI",
+  "status": "legacy",
+  "price": {
+    "amount": 30,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Grok Settings → Usage",
+    "url": "https://grok.com"
+  },
+  "meters": [
+    {
+      "id": "grok-week",
+      "label": "Weekly pool",
+      "hint": "grok.com or the Grok app: Settings → Usage",
+      "period": "week",
+      "reset": {
+        "type": "fixed-weekly-account",
+        "rule": "Resets once a week on a schedule set per account. The reset date and time are shown in Settings → Usage.",
+        "stipulations": [
+          "One pool covers Chat, Voice, image and video, Grok Build and the API product line. Settings → Usage breaks it down by product.",
+          "It is compute-weighted. A video or a long coding task costs much more than a chat message.",
+          "xAI shows it only as a percentage and publishes no per-model query counts.",
+          "xAI doesn't publish the size of the SuperGrok pool.",
+          "Free-tier Chat and Voice limits still apply separately, on their own schedule.",
+          "720p video drops to 480p once you hit your tier's 720p cap."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "At the limit, paid features pause until the weekly reset. You can buy Extra Usage Credits on the web ($5 minimum) at standard rates, which cost more per action than included usage. Credits expire one year after purchase. Auto Top Up is optional and capped by a monthly limit you set.",
+  "card": {
+    "how": [
+      "One weekly pool shared by Chat, Voice, image and video, and Grok Build.",
+      "Models: Grok 4.7, Grok 4.6 and Grok 4.5, plus the Imagine and Voice families.",
+      "Grok Build CLI (early beta) draws from the same pool."
+    ],
+    "ext": [
+      "xAI models only.",
+      "API calls are billed per token, separately. No API credits are included."
+    ],
+    "quirks": [
+      "Closed to new buyers since 12 Oct 2026. You keep the plan until you change or cancel it.",
+      "Switching to The X Subscription is permanent and support can't undo it. The old plan is cancelled at checkout and unused time is refunded pro rata.",
+      "A plan bought through the App Store has to be cancelled through Apple.",
+      "Legacy plans can't use the referral program.",
+      "The closest current plan is X Premium ($30), which includes SuperGrok, Cursor Pro and X Premium+ benefits. On this board that is Cursor Premium.",
+      "Grok 4.7 Fast is only available in Cursor and Grok Build.",
+      "Grok Build allows 8 parallel subagents on SuperGrok (third-party report, unconfirmed)."
+    ]
+  },
+  "events": [
+    {
+      "date": null,
+      "what": "No longer sold since 12 Oct 2026. No forced move to The X Subscription has been announced.",
+      "source": "https://x.ai/news/x-subscription"
+    }
+  ],
+  "sources": [
+    {
+      "label": "Grok FAQ",
+      "url": "https://docs.x.ai/grok/faq",
+      "official": true
+    },
+    {
+      "label": "Introducing The X Subscription",
+      "url": "https://x.ai/news/x-subscription",
+      "official": true
+    },
+    {
+      "label": "X Subscription pricing",
+      "url": "https://docs.x.ai/x-subscription/pricing",
+      "official": true
+    },
+    {
+      "label": "X Subscription overview",
+      "url": "https://docs.x.ai/x-subscription/overview",
+      "official": true
+    },
+    {
+      "label": "Grok Build CLI",
+      "url": "https://x.ai/news/grok-build-cli",
+      "official": true
+    },
+    {
+      "label": "xAI release notes",
+      "url": "https://docs.x.ai/developers/release-notes",
+      "official": true
+    },
+    {
+      "label": "SuperGrok Heavy and Cursor Ultra (Cursor forum)",
+      "url": "https://forum.cursor.com/t/did-i-miss-an-announcement-on-supergrok-heavy-and-cursor-ultra/169128",
+      "official": false
+    }
+  ]
+}

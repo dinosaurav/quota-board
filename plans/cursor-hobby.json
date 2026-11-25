@@ -1,0 +1,99 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "cursor-hobby",
+  "name": "Cursor Free",
+  "vendor": "Cursor",
+  "status": "active",
+  "price": {
+    "amount": 0,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "cursor",
+    "tiers": [
+      "free"
+    ]
+  },
+  "check": {
+    "label": "Grok dashboard → Usage",
+    "url": "https://grok.com/dashboard"
+  },
+  "meters": [
+    {
+      "id": "cursor-week",
+      "label": "Weekly pool",
+      "hint": "Small starter allowance of Cursor models",
+      "period": "week",
+      "reset": {
+        "type": "unknown",
+        "rule": "Cursor calls the Free allowance limited and doesn't say when it resets.",
+        "stipulations": [
+          "Covers Agent, Chat and Tab with Cursor models (Grok and Composer). No third-party models.",
+          "Cursor documents a weekly pool for paid plans only. A weekly reset for Free is a third-party report, unconfirmed.",
+          "quota-board's Cursor collector doesn't read this pool yet. Enter readings by hand from the dashboard."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Cursor doesn't document paid usage on Free. On the older Hobby plan, AI features pause until the pool resets.",
+  "card": {
+    "how": [
+      "A small allowance of Agent, Chat and Tab with Cursor's own models.",
+      "No third-party models, Cloud Agents or Bugbot."
+    ],
+    "ext": [
+      "None. Claude, GPT and Gemini need Premium or above."
+    ],
+    "quirks": [
+      "Cursor now calls the free tier Free. Older Hobby accounts are a legacy plan with a monthly Cursor-models pool and no paid usage.",
+      "Cursor publishes no numbers for the Free allowance.",
+      "Teams can give a member a Free seat. It draws from the member's personal plan or a small free allowance."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Cursor pricing",
+      "url": "https://cursor.com/pricing",
+      "official": true
+    },
+    {
+      "label": "Cursor pricing docs",
+      "url": "https://cursor.com/docs/account/pricing",
+      "official": true
+    },
+    {
+      "label": "Pricing and plans (help)",
+      "url": "https://cursor.com/help/account-and-billing/pricing",
+      "official": true
+    },
+    {
+      "label": "Usage limits",
+      "url": "https://cursor.com/help/models-and-usage/usage-limits",
+      "official": true
+    },
+    {
+      "label": "Legacy Cursor plans",
+      "url": "https://cursor.com/docs/account/pricing/legacy-cursor-plans",
+      "official": true
+    },
+    {
+      "label": "Introducing The X Subscription (x.ai)",
+      "url": "https://x.ai/news/x-subscription",
+      "official": true
+    },
+    {
+      "label": "Teams pricing",
+      "url": "https://cursor.com/docs/account/teams/pricing",
+      "official": true
+    },
+    {
+      "label": "Cursor usage limits after the Oct 2026 repricing (WhichCodingPlan)",
+      "url": "https://whichcodingplan.com/limits/cursor",
+      "official": false
+    }
+  ]
+}

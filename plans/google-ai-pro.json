@@ -1,0 +1,179 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "google-ai-pro",
+  "name": "Google AI Pro",
+  "vendor": "Google",
+  "status": "active",
+  "price": {
+    "amount": 19.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "antigravity",
+    "tiers": [
+      "Google AI Pro"
+    ]
+  },
+  "check": {
+    "label": "Antigravity settings and Google One",
+    "url": "https://one.google.com/about/google-ai-plans/"
+  },
+  "meters": [
+    {
+      "id": "ag-gemini-5h",
+      "label": "Antigravity Gemini, 5-hour",
+      "hint": "Gemini 4 models and Orchestrator",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-5h-until-weekly",
+        "rule": "Refreshes 5 hours after the window starts, until the weekly limit is reached.",
+        "stipulations": [
+          "Quota is spent in proportion to token cost, so cheaper models and shorter tasks last longer.",
+          "The 5-hour limit spreads global demand; it is not tied to your tier."
+        ]
+      }
+    },
+    {
+      "id": "ag-gemini-week",
+      "label": "Antigravity Gemini, weekly",
+      "hint": "Shared by all Gemini models",
+      "period": "week",
+      "reset": {
+        "type": "rolling-weekly",
+        "rule": "Refreshes fully 7 days after the window starts. The Antigravity CLI shows the exact time.",
+        "stipulations": [
+          "Your weekly limit is tied to your tier."
+        ]
+      }
+    },
+    {
+      "id": "ag-3p-5h",
+      "label": "Antigravity Claude + GPT, 5-hour",
+      "hint": "Claude Opus/Sonnet 5.5, GPT-OSS until 30 Nov",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-5h-until-weekly",
+        "rule": "Refreshes 5 hours after the window starts, until the weekly limit is reached.",
+        "stipulations": [
+          "Quota is spent in proportion to token cost, so cheaper models and shorter tasks last longer.",
+          "The 5-hour limit spreads global demand; it is not tied to your tier."
+        ]
+      }
+    },
+    {
+      "id": "ag-3p-week",
+      "label": "Antigravity Claude + GPT, weekly",
+      "hint": "Separate from the Gemini group",
+      "period": "week",
+      "reset": {
+        "type": "rolling-weekly",
+        "rule": "Refreshes fully 7 days after the window starts. The Antigravity CLI shows the exact time.",
+        "stipulations": [
+          "Your weekly limit is tied to your tier."
+        ]
+      }
+    },
+    {
+      "id": "google-flow",
+      "label": "Flow credits",
+      "hint": "1,000 per month; enter by hand",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Monthly with your Google One billing date.",
+        "stipulations": [
+          "Unused credits don't roll over.",
+          "On a family plan, the monthly credits are one pool shared by the family group."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Set \"AI Credit Overages\" to Always to keep going on paid AI credits (Gemini Enterprise pricing), or Never to stop at the limit. AI credits also buy extra use in the Gemini app and Flow. On a family plan, only the manager can buy credits.",
+  "card": {
+    "how": [
+      "Antigravity models are split into two groups (Gemini; Claude and GPT). Each group has its own 5-hour and weekly limit.",
+      "The Gemini app has 4x the free limits, on the same 5-hour/weekly pattern. Google publishes no numbers. Deep Research and video use up the limit fastest.",
+      "Monthly: 1,000 Flow credits, $10 Google Cloud credit, 200 Colab compute units."
+    ],
+    "ext": [
+      "Antigravity includes Claude Sonnet 5.5 and Opus 5.5 (thinking) on paid Pro, with their own quota group.",
+      "Pro trials get the older Claude 4.6 models instead, a lower quota, and fewer models. The Claude 4.6 models are removed on 30 Nov 2026."
+    ],
+    "quirks": [
+      "Gemini CLI and the Gemini Code Assist IDE extensions stopped serving AI Pro and Ultra on 18 Jun 2026. Use Antigravity CLI (agy); `agy plugin import gemini` brings over Gemini CLI setup.",
+      "Run `/usage` in the Antigravity CLI for exact remaining quota and reset times.",
+      "Family sharing: up to 5 other people get the AI features at no extra cost. Flow credits are one shared pool. Colab units and the Google Cloud credit are for the plan manager only. Google doesn't say whether Gemini and Antigravity limits are per person.",
+      "Antigravity, Flow and Deep Research need you to be 18 or older.",
+      "Workspace accounts can't use Pro. Antigravity gives them only a small starter quota. You need a personal Google account."
+    ]
+  },
+  "events": [
+    {
+      "date": null,
+      "what": "Black Friday: up to 50% off select Google AI plans. Worth checking if you're thinking about Ultra."
+    },
+    {
+      "date": "2026-11-30",
+      "what": "Antigravity removes GPT-OSS-120b, Gemini 3.8 Flash, Gemini 4 Argon, and the Claude 4.6 models used by Pro trials."
+    },
+    {
+      "date": "2026-12-31",
+      "what": "Jules shuts down. It has been read-only since 11 Nov. Export your sessions with Jules Tools before then."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Google AI plans",
+      "url": "https://gemini.google/subscriptions/",
+      "official": true
+    },
+    {
+      "label": "Google One AI plans",
+      "url": "https://one.google.com/about/google-ai-plans/",
+      "official": true
+    },
+    {
+      "label": "Gemini app limits",
+      "url": "https://support.google.com/gemini/answer/16275805",
+      "official": true
+    },
+    {
+      "label": "Antigravity pricing",
+      "url": "https://antigravity.google/pricing",
+      "official": true
+    },
+    {
+      "label": "Antigravity plans",
+      "url": "https://antigravity.google/docs/plans",
+      "official": true
+    },
+    {
+      "label": "Antigravity for Workspace accounts",
+      "url": "https://antigravity.google/docs/workspace",
+      "official": true
+    },
+    {
+      "label": "Gemini CLI migration",
+      "url": "https://antigravity.google/docs/cli/gcli-migration/",
+      "official": true
+    },
+    {
+      "label": "Code Assist consumer deprecation",
+      "url": "https://developers.google.com/gemini-code-assist/docs/deprecations/code-assist-individuals",
+      "official": true
+    },
+    {
+      "label": "AI credits and family sharing",
+      "url": "https://support.google.com/googleone/answer/16287445",
+      "official": true
+    },
+    {
+      "label": "Jules changelog",
+      "url": "https://jules.google/docs/changelog/",
+      "official": true
+    }
+  ]
+}

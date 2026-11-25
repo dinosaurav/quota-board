@@ -1,0 +1,68 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "alibaba-token-plan-pro",
+  "name": "Alibaba Token Plan Pro",
+  "vendor": "Alibaba Cloud",
+  "status": "active",
+  "price": {
+    "amount": 43,
+    "currency": "USD",
+    "period": "month",
+    "note": "Monthly, quarterly or yearly billing. Singapore region only."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Model Studio console: Token Plan",
+    "url": "https://modelstudio.console.alibabacloud.com/ap-southeast-1/subscription/token-plan/personal"
+  },
+  "meters": [
+    {
+      "id": "alibaba-token-month",
+      "label": "Monthly credits",
+      "hint": "200,000 credits per month",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets to the full amount at the start of each subscription month.",
+        "stipulations": [
+          "Each request costs credits based on the model, tokens, thinking mode and tool calls.",
+          "Built-in tools such as web search, web scraping and the code interpreter also use credits.",
+          "Video costs more with longer duration and higher resolution. Async tasks are charged when they finish.",
+          "Off-peak, 22:00 to 08:00 UTC+8, qwen3.8-max and qwen3.8-flash cost 60% less and several DeepSeek models 50% less.",
+          "Unused credits don't roll over. There is no 5-hour or weekly limit; the weekly quota was removed on 22 Sep 2026."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Buy an Extra Bundle: $15 for 20,000 credits, up to 5. Bundles last one month and are used only after the plan credits. When both run out, service pauses until the reset.",
+  "card": {
+    "how": [
+      "200,000 credits a month, with 6 to 8 agents running at once.",
+      "A monthly credit pool only. No 5-hour or weekly window."
+    ],
+    "ext": [
+      "Models from other labs: DeepSeek V4.x and GLM-5.3, alongside qwen4-max (preview), qwen3.8-max, qwen3.8-flash and Wan.",
+      "Works in interactive coding tools with the plan's own key. The console shows the base URL."
+    ],
+    "quirks": [
+      "Interactive coding tools only. Scripts, backends, batch jobs, Postman or Dify can get the plan suspended or the key revoked.",
+      "No sharing. This is a separate product from the Coding Plan, with its own key and console page.",
+      "Quotas went up on every tier on 9 Nov 2026.",
+      "Alibaba cut the Pro price from 9 Nov 2026. The new price applies from your next cycle, and the overview page doesn't state it."
+    ]
+  },
+  "events": [
+    {
+      "date": "2026-11-25",
+      "what": "The qwen4-max preview on the Token Plan ends."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Token Plan (Personal Edition)",
+      "url": "https://www.alibabacloud.com/help/en/model-studio/token-plan-personal-overview",
+      "official": true
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "google-ai-plus",
+  "name": "Google AI Plus",
+  "vendor": "Google",
+  "status": "active",
+  "price": {
+    "amount": 4.99,
+    "currency": "USD",
+    "period": "month",
+    "note": "Was $7.99 until June 2026."
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "antigravity",
+    "tiers": [
+      "Google AI Plus"
+    ]
+  },
+  "check": {
+    "label": "Google One",
+    "url": "https://one.google.com/about/google-ai-plans/"
+  },
+  "meters": [
+    {
+      "id": "ag-gemini-week",
+      "label": "Antigravity Gemini, weekly",
+      "hint": "Gemini 4 Hydrogen; Gemini 3.8 Flash until 30 Nov",
+      "period": "week",
+      "reset": {
+        "type": "rolling-weekly",
+        "rule": "Refreshes fully 7 days after the window starts. The Antigravity CLI shows the exact time.",
+        "stipulations": [
+          "Your weekly limit is tied to your tier.",
+          "Free and AI Plus have no 5-hour window. The quota refreshes weekly.",
+          "Limits depend on available capacity."
+        ]
+      }
+    },
+    {
+      "id": "ag-3p-week",
+      "label": "Antigravity Claude + GPT, weekly",
+      "hint": "Claude 4.6 and GPT-OSS; removed 30 Nov",
+      "period": "week",
+      "reset": {
+        "type": "rolling-weekly",
+        "rule": "Refreshes fully 7 days after the window starts. The Antigravity CLI shows the exact time.",
+        "stipulations": [
+          "Your weekly limit is tied to your tier.",
+          "These models are removed on 30 Nov 2026. After that, this tier has no Claude or GPT models."
+        ]
+      }
+    },
+    {
+      "id": "google-flow",
+      "label": "Flow credits",
+      "hint": "200 per month; enter by hand",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Monthly with your Google One billing date.",
+        "stipulations": [
+          "Unused credits don't roll over.",
+          "On a family plan, the monthly credits are one pool shared by the family group."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "You stop at the limit until it refreshes. AI Plus can't buy AI credits for Antigravity overage; that needs Pro or Ultra.",
+  "card": {
+    "how": [
+      "The Gemini app has 2x the free limits, with a 128k-token context window. The limit refreshes every 5 hours until you reach the weekly limit.",
+      "In Antigravity, AI Plus gets the same weekly quota as the free tier. There is no 5-hour window.",
+      "Monthly: 200 Flow credits, 50 Colab compute units, 400 GB storage."
+    ],
+    "ext": [
+      "Antigravity includes Claude Sonnet 4.6, Claude Opus 4.6 and GPT-OSS-120b until 30 Nov 2026. After that, Gemini models only."
+    ],
+    "quirks": [
+      "Gemini CLI no longer accepts Google sign-in for consumer accounts (since 18 Jun 2026). Use Antigravity CLI (agy).",
+      "Run `/usage` in the Antigravity CLI for exact remaining quota and reset times.",
+      "Family sharing: up to 5 other people get the AI features at no extra cost. Flow credits are one shared pool. Colab units are for the plan manager only. Google doesn't say whether Gemini and Antigravity limits are per person.",
+      "Antigravity, Flow and Deep Research need you to be 18 or older.",
+      "Workspace accounts can't use Google AI plans. Antigravity gives them only a small starter quota. You need a personal Google account."
+    ]
+  },
+  "events": [
+    {
+      "date": "2026-11-30",
+      "what": "Antigravity removes Claude Sonnet 4.6, Claude Opus 4.6, GPT-OSS-120b and Gemini 3.8 Flash from this tier. Gemini 4 Hydrogen stays."
+    },
+    {
+      "date": null,
+      "what": "Black Friday: up to 50% off select Google AI plans. Check the Google One page before you upgrade."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Google AI plans",
+      "url": "https://gemini.google/subscriptions/",
+      "official": true
+    },
+    {
+      "label": "Google One AI plans",
+      "url": "https://one.google.com/about/google-ai-plans/",
+      "official": true
+    },
+    {
+      "label": "Gemini app limits",
+      "url": "https://support.google.com/gemini/answer/16275805",
+      "official": true
+    },
+    {
+      "label": "Antigravity pricing",
+      "url": "https://antigravity.google/pricing",
+      "official": true
+    },
+    {
+      "label": "Antigravity plans",
+      "url": "https://antigravity.google/docs/plans",
+      "official": true
+    },
+    {
+      "label": "Antigravity for Workspace accounts",
+      "url": "https://antigravity.google/docs/workspace",
+      "official": true
+    },
+    {
+      "label": "Code Assist consumer deprecation",
+      "url": "https://developers.google.com/gemini-code-assist/docs/deprecations/code-assist-individuals",
+      "official": true
+    },
+    {
+      "label": "AI credits and family sharing",
+      "url": "https://support.google.com/googleone/answer/16287445",
+      "official": true
+    },
+    {
+      "label": "AI Plus price cut to $4.99 (TechCrunch)",
+      "url": "https://techcrunch.com/2026/06/09/google-just-fired-a-warning-shot-in-the-ai-subscription-price-wars",
+      "official": false
+    }
+  ]
+}

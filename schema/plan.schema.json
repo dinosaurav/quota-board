@@ -1,0 +1,354 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quota-board/plan.schema.json",
+  "title": "Quota Board plan",
+  "description": "One AI subscription plan, one file per plan in plans/. Plan files describe the plan for everyone: no personal details. node tools/check.mjs enforces this schema plus cross-checks.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "vendor",
+    "status",
+    "price",
+    "lastVerified",
+    "check",
+    "meters",
+    "card",
+    "sources"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Must equal the file name without .json."
+    },
+    "name": {
+      "type": "string"
+    },
+    "vendor": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "legacy",
+        "discontinued"
+      ],
+      "description": "active: sold now. legacy: existing subscribers keep it but it is no longer sold. discontinued: gone."
+    },
+    "price": {
+      "type": "object",
+      "required": [
+        "amount",
+        "currency",
+        "period"
+      ],
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "period": {
+          "enum": [
+            "month",
+            "year"
+          ]
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "lastVerified": {
+      "type": "string",
+      "format": "date",
+      "description": "Date you last checked every fact in this file against the sources."
+    },
+    "detect": {
+      "type": "object",
+      "required": [
+        "collector"
+      ],
+      "description": "How quota-board recognises this plan from a collector. A plan matches when the collector reports a tier equal (case-insensitive) to one of tiers, or matching tierPattern. Leave detect out when no collector exists for this provider.",
+      "properties": {
+        "collector": {
+          "type": "string",
+          "description": "File name in collectors/providers/ without .mjs."
+        },
+        "tiers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tierPattern": {
+          "type": "string",
+          "description": "Case-insensitive regex."
+        }
+      }
+    },
+    "check": {
+      "type": "object",
+      "required": [
+        "label",
+        "url"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://"
+        }
+      }
+    },
+    "meters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "period",
+          "reset"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Unique within the plan. Must equal the id the collector emits. Plans from the same provider reuse the same meter ids (e.g. every Claude plan uses claude-5h)."
+          },
+          "label": {
+            "type": "string"
+          },
+          "hint": {
+            "type": "string"
+          },
+          "period": {
+            "enum": [
+              "5h",
+              "day",
+              "week",
+              "month"
+            ]
+          },
+          "windowSeconds": {
+            "type": "integer",
+            "description": "Override when the window isn't one of the standard periods."
+          },
+          "auto": {
+            "enum": [
+              "monday-utc"
+            ],
+            "description": "Compute the reset without any reading."
+          },
+          "reset": {
+            "type": "object",
+            "required": [
+              "type",
+              "rule"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "rolling-from-first-use",
+                  "rolling-weekly",
+                  "rolling-5h-until-weekly",
+                  "fixed-weekly-account",
+                  "fixed-weekly-utc",
+                  "billing-cycle",
+                  "paid-period",
+                  "calendar-month",
+                  "fixed-30d",
+                  "daily",
+                  "unknown"
+                ],
+                "description": "calendar-month: resets on the 1st of each month. fixed-30d: every 30 days from activation."
+              },
+              "rule": {
+                "type": "string",
+                "description": "One sentence: when this window resets."
+              },
+              "stipulations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Conditions, exceptions and gotchas for this window."
+              }
+            }
+          }
+        }
+      }
+    },
+    "resets": {
+      "type": "array",
+      "description": "One-off resets or reset credits the user can spend (promos, reset tokens).",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "howTo",
+          "stipulations"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Collectors report live counts under this id."
+          },
+          "label": {
+            "type": "string"
+          },
+          "count": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "integer"
+              },
+              "max": {
+                "type": "integer"
+              },
+              "rule": {
+                "type": "string"
+              }
+            }
+          },
+          "expires": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "ISO date-time, or null."
+          },
+          "howTo": {
+            "type": "string"
+          },
+          "stipulations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "overage": {
+      "type": "string",
+      "description": "What happens at the limit and how paid overage works."
+    },
+    "card": {
+      "type": "object",
+      "required": [
+        "how",
+        "ext",
+        "quirks"
+      ],
+      "properties": {
+        "how": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ext": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Access to models from other companies, and use of the plan in other tools."
+        },
+        "quirks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "alert": {
+          "type": "string",
+          "description": "One urgent line shown at the top of the card. Plain text."
+        }
+      }
+    },
+    "modelTable": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "columns": {
+          "type": "array"
+        },
+        "rows": {
+          "type": "array"
+        },
+        "footer": {
+          "type": "string"
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "date",
+          "what"
+        ],
+        "properties": {
+          "date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "YYYY-MM-DD, or null for an ongoing promo with no end date."
+          },
+          "what": {
+            "type": "string"
+          },
+          "unverified": {
+            "type": "boolean",
+            "description": "True when only third-party sites report it."
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "url",
+          "official"
+        ],
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https://"
+          },
+          "official": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "$schema": {
+      "type": "string"
+    }
+  }
+}

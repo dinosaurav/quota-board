@@ -1,0 +1,123 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "claude-team-standard",
+  "name": "Claude Team (Standard seat)",
+  "vendor": "Anthropic",
+  "status": "active",
+  "price": {
+    "amount": 25,
+    "currency": "USD",
+    "period": "month",
+    "note": "Per seat. $25 a month billed monthly, or $20 a month billed annually. Teams of 2 to 150 seats; seats can be mixed with Premium."
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "claude",
+    "tiers": []
+  },
+  "check": {
+    "label": "Settings → Usage",
+    "url": "https://claude.ai/settings/usage"
+  },
+  "meters": [
+    {
+      "id": "claude-5h",
+      "label": "5-hour session",
+      "hint": "1.25x Pro per session",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "The window opens with your first message and resets in full 5 hours later.",
+        "stipulations": [
+          "Limits are per member, not pooled. Unused usage can't move to another seat.",
+          "claude.ai (web, desktop, mobile), Claude Code, Cowork and IDE use all count toward the same window."
+        ]
+      }
+    },
+    {
+      "id": "claude-week",
+      "label": "Weekly, all models",
+      "hint": "Fixed time for your account",
+      "period": "week",
+      "reset": {
+        "type": "fixed-weekly-account",
+        "rule": "Resets at a fixed day and time assigned to your account.",
+        "stipulations": [
+          "The reset time doesn't move when you start using Claude or when the subscription renews.",
+          "Every Claude model and surface counts toward this one weekly limit.",
+          "Since 14 Sep 2026, the weekly limit in Claude Code is 25% higher than it was before the May to September promotion.",
+          "Fable models don't use this limit on a Standard seat. They bill to usage credits, if your organization has them."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Blocked at the limit unless your organization's owner has bought usage credits. Members then keep working on credits at standard API rates, within spend limits the owner sets. Team credits expire 12 months after purchase and are non-refundable. An owner can also move you to a Premium seat.",
+  "card": {
+    "how": [
+      "A 5-hour session window at 1.25x Pro and a weekly window across all models.",
+      "Opus, Sonnet and Haiku are included. Fable models are not: they run on usage credits.",
+      "Limits belong to your seat. Every Claude surface draws from them."
+    ],
+    "ext": [
+      "Claude models only.",
+      "Claude Code works in VS Code, Cursor and other VS Code forks, and JetBrains IDEs. IDE use counts toward the same limits.",
+      "The team gets up to $500 a month in pooled Claude API credits."
+    ],
+    "quirks": [
+      "If ANTHROPIC_API_KEY is set in your environment, Claude Code bills the API instead of your seat.",
+      "A move from Premium down to Standard takes effect at the next renewal. A move up to Premium takes effect right away.",
+      "The free Fable 5.2 launch week and its one limit reset for Standard seats expired on 16 Nov 2026."
+    ]
+  },
+  "events": [
+    {
+      "date": "2026-12-10",
+      "what": "One free full limit reset (all models, 5-hour and weekly) for Pro, Max, Ultra and Team expires at 2:00 pm PT. Look for it under Settings → Usage → Limit resets.",
+      "unverified": true,
+      "source": "https://pasqualepillitteri.it/en/news/32912/claude-free-full-reset-limit-bugs-december-10"
+    }
+  ],
+  "sources": [
+    {
+      "label": "Claude pricing",
+      "url": "https://claude.com/pricing",
+      "official": true
+    },
+    {
+      "label": "What is the Team plan?",
+      "url": "https://support.claude.com/en/articles/9266767-what-is-the-team-plan",
+      "official": true
+    },
+    {
+      "label": "Purchase and manage premium seats",
+      "url": "https://support.claude.com/en/articles/12004354-how-to-purchase-and-manage-premium-seats",
+      "official": true
+    },
+    {
+      "label": "Usage credits for Team plans",
+      "url": "https://support.claude.com/en/articles/12005970-manage-usage-credits-for-team-and-seat-based-enterprise-plans",
+      "official": true
+    },
+    {
+      "label": "Fable models on your plan",
+      "url": "https://support.claude.com/en/articles/15424964-claude-fable-models-on-your-plan",
+      "official": true
+    },
+    {
+      "label": "Fable 5.2 launch offers",
+      "url": "https://support.claude.com/en/articles/17506494-claude-fable-5-2-launch-offers",
+      "official": true
+    },
+    {
+      "label": "Claude Code weekly limits promotion (May to Sep 2026)",
+      "url": "https://support.claude.com/en/articles/15910845",
+      "official": true
+    },
+    {
+      "label": "Free full reset report (third-party)",
+      "url": "https://pasqualepillitteri.it/en/news/32912/claude-free-full-reset-limit-bugs-december-10",
+      "official": false
+    }
+  ]
+}

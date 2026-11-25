@@ -1,0 +1,181 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "factory-max",
+  "name": "Factory Max",
+  "vendor": "Factory",
+  "status": "active",
+  "price": {
+    "amount": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Droid: /limits, or Settings → Usage",
+    "url": "https://docs.factory.com/pricing/individuals"
+  },
+  "meters": [
+    {
+      "id": "factory-5h",
+      "label": "5-hour window",
+      "hint": "Run /limits in Droid, or Settings → Usage.",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "Opens at your first Droid request and resets 5 hours later.",
+        "stipulations": [
+          "A request needs room in all three windows (5 hours, 7 days, 30 days).",
+          "Each model spends usage at its multiplier: Claude Opus 5.5 1.6x, Sonnet 5.5 0.8x, GPT-6.2 Sol 0.8x, Haiku 5.5 and GPT-6 Luna 0.04x.",
+          "Fast variants cost double.",
+          "Factory publishes no window sizes."
+        ]
+      }
+    },
+    {
+      "id": "factory-week",
+      "label": "7-day window",
+      "hint": "Run /limits in Droid, or Settings → Usage.",
+      "period": "week",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "Opens at your first Droid request and resets 7 days later.",
+        "stipulations": [
+          "Droid Core models have their own separate limits."
+        ]
+      }
+    },
+    {
+      "id": "factory-30d",
+      "label": "30-day window",
+      "hint": "Run /limits in Droid, or Settings → Usage.",
+      "period": "month",
+      "windowSeconds": 2592000,
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "Opens at your first Droid request and resets 30 days later.",
+        "stipulations": [
+          "Unused usage doesn't carry over."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "At a limit the current request finishes, then later ones fail with a rate-limit error. Run /limits to switch to Droid Core models or to Extra Usage. Extra Usage is prepaid USD credit, $10 minimum, that never expires. Once on, it stays on until you turn it off or it runs out.",
+  "card": {
+    "how": [
+      "About 10x the usage of Pro, in three rolling windows (5 hours, 7 days, 30 days) that start at first use.",
+      "Each model spends usage at its own multiplier."
+    ],
+    "ext": [
+      "Claude, GPT, Gemini, Grok and open models (Droid Core) at Factory's multipliers.",
+      "Bring-your-own-key works only on the Free plan. Free also accepts ChatGPT, GitHub Copilot, OpenRouter and Vercel AI Gateway logins."
+    ],
+    "quirks": [
+      "Standard Tokens are gone. Pro used to include 20M a month (third-party report, unconfirmed).",
+      "Factory's docs call Droid Core free in one place and say it uses Standard Usage in another.",
+      "Missions need Extra Usage turned on and pause at a limit."
+    ]
+  },
+  "modelTable": {
+    "title": "Factory: usage multipliers",
+    "note": "A model at 2x uses your windows twice as fast as one at 1x.",
+    "columns": [
+      "Model",
+      "Multiplier"
+    ],
+    "rows": [
+      [
+        "GPT-6 Luna",
+        0.04
+      ],
+      [
+        "Claude Haiku 5.5",
+        0.04
+      ],
+      [
+        "GLM-5.3-Flash",
+        0.06
+      ],
+      [
+        "DeepSeek V4.1 Flash",
+        0.12
+      ],
+      [
+        "Gemini 3.8 Flash",
+        0.3
+      ],
+      [
+        "GLM-5.3",
+        0.56
+      ],
+      [
+        "Claude Sonnet 5.5",
+        0.8
+      ],
+      [
+        "GPT-6.2 Sol",
+        0.8
+      ],
+      [
+        "Gemini 4 Argon",
+        0.8
+      ],
+      [
+        "Grok 4.7",
+        0.8
+      ],
+      [
+        "Kimi K3.1 Pro",
+        0.8
+      ],
+      [
+        "Gemini 4 Neon",
+        1.2
+      ],
+      [
+        "Claude Opus 5.5",
+        1.6
+      ],
+      [
+        "GPT-5.6 Sol",
+        2
+      ],
+      [
+        "GPT-6.2 Astra",
+        3.2
+      ],
+      [
+        "Claude Fable 5.2",
+        3.2
+      ],
+      [
+        "GPT-5.5 Pro",
+        12
+      ]
+    ],
+    "footer": "Gemini 4 Carbon, Argon and 3.8 Flash rates are marked promotional."
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Factory pricing",
+      "url": "https://factory.com/pricing",
+      "official": true
+    },
+    {
+      "label": "Individual plans",
+      "url": "https://docs.factory.com/pricing/individuals",
+      "official": true
+    },
+    {
+      "label": "Pricing docs",
+      "url": "https://docs.factory.com/pricing",
+      "official": true
+    },
+    {
+      "label": "Models and multipliers",
+      "url": "https://docs.factory.com/models",
+      "official": true
+    }
+  ]
+}

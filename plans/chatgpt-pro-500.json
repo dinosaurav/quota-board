@@ -1,0 +1,151 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "chatgpt-pro-500",
+  "name": "ChatGPT Pro 500",
+  "vendor": "OpenAI",
+  "status": "active",
+  "price": {
+    "amount": 500,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "codex",
+    "tiers": [
+      "promax"
+    ]
+  },
+  "check": {
+    "label": "Codex usage page, or /status in the CLI",
+    "url": "https://chatgpt.com/codex/settings/usage"
+  },
+  "meters": [
+    {
+      "id": "chatgpt-week",
+      "label": "Codex + Work weekly",
+      "hint": "Pro has no 5-hour limit",
+      "period": "week",
+      "reset": {
+        "type": "rolling-weekly",
+        "rule": "A 7-day window. The usage API and Settings → Usage show the exact reset time.",
+        "stipulations": [
+          "Codex, ChatGPT Work, and ChatGPT for Word, Excel and PowerPoint share this allowance.",
+          "Local messages and cloud tasks share it. A cloud task may use more than a local message.",
+          "GitHub code reviews (@codex on a PR, or automatic reviews) are metered as Code Review usage. Local /review runs count here like any other task.",
+          "Fast mode spends it at 2x on GPT-6.2 Astra and GPT-6.2 Sol, and at 2.5x on other models.",
+          "Ultrafast spends it at 6x on GPT-6.2 Astra and GPT-6.2 Sol, and at 8x on GPT-6 Astra and GPT-6.1 Sol.",
+          "GPT-6 Pro in Chat has its own weekly message limit, separate from this allowance.",
+          "After a reset, the next week starts at your first Codex or Work request, so the reset day can move."
+        ]
+      }
+    }
+  ],
+  "resets": [
+    {
+      "id": "chatgpt-limit-reset",
+      "label": "Banked Codex resets",
+      "count": {
+        "rule": "Given out in OpenAI promotions, including some referral offers. The usage API reports how many you hold and how many you can use right now."
+      },
+      "expires": null,
+      "howTo": "Desktop app: Settings → Usage & billing, select the reset and confirm. CLI: /usage, then Redeem reset.",
+      "stipulations": [
+        "Free. Each reset has its own expiry date, shown in your account or the offer.",
+        "On Pro it restores the weekly allowance to 100%. It doesn't raise the limit.",
+        "You can only use one when the weekly allowance has less than 80% left.",
+        "The desktop app can use one for you when 10% or less is left, if you turn on \"Allow your assistant to use resets\". It asks each time.",
+        "Unused or expired resets aren't refunded or replaced."
+      ]
+    },
+    {
+      "id": "chatgpt-instant-reset",
+      "label": "Paid instant reset",
+      "count": {
+        "rule": "Bought one at a time. OpenAI doesn't state a cap. The price is shown at checkout."
+      },
+      "expires": null,
+      "howTo": "Desktop app: Settings → Usage, Buy an instant reset. Or the reset offer banner when you hit your weekly limit.",
+      "stipulations": [
+        "Personal Plus and Pro accounts only, on ChatGPT web and the Codex desktop app. Availability varies by account and country.",
+        "Applies the moment you pay, even if usage is left. It can't be saved for later.",
+        "It pulls your normal weekly allowance forward. It doesn't add extra usage.",
+        "Your next weekly reset is 7 days after your first request following the reset, not 7 days after payment.",
+        "Generally not refundable."
+      ]
+    }
+  ],
+  "overage": "After the weekly allowance, buy credits under Settings → Usage, or turn on auto top-up. Included usage is spent first, then credits. Credits expire 12 months after purchase.",
+  "card": {
+    "how": [
+      "Codex on Pro has no 5-hour limit, only a weekly allowance.",
+      "Pro 500 has the highest included usage of the three Pro tiers. It recently got double its previous Codex and Work allowance.",
+      "Monthly API credits are included. The pricing page doesn't show the amount. Unused credits expire at the end of the billing cycle."
+    ],
+    "ext": [
+      "OpenAI models only.",
+      "The Codex extension works in most VS Code forks, including Cursor.",
+      "Sharing your plan with partner tools is opt-in and off by default."
+    ],
+    "quirks": [
+      "The only self-serve plan with Ultrafast on GPT-6.2 Astra, GPT-6.2 Sol, GPT-6 Astra and GPT-6.1 Sol. Ultrafast spends included usage first, then credits.",
+      "Ultrafast paid with credits costs 6x the Standard credit rate on GPT-6 Astra and GPT-6.1 Sol.",
+      "Signing into Codex with an API key bills API rates instead of your plan.",
+      "Billed monthly only. There's no annual option.",
+      "The Codex usage API calls this plan \"promax\"; the Codex CLI shows it as Pro 500."
+    ]
+  },
+  "events": [
+    {
+      "date": "2026-12-01",
+      "what": "Starting in December, ChatGPT and Codex share one token-based allowance on Plus, Pro and Business. Instant chat won't count. OpenAI gives no exact date and some accounts may switch earlier.",
+      "source": "https://help.openai.com/en/articles/20001625-understand-chatgpt-and-codex-usage-limits"
+    },
+    {
+      "date": "2027-03-01",
+      "what": "Ultrafast on GPT-6.2 Astra and GPT-6.2 Sol paid with purchased credits goes from 3x to 6x the Standard credit rate. Included usage stays at 6x."
+    }
+  ],
+  "sources": [
+    {
+      "label": "About ChatGPT Pro plans",
+      "url": "https://help.openai.com/en/articles/9793128-about-chatgpt-pro-plans",
+      "official": true
+    },
+    {
+      "label": "Codex pricing",
+      "url": "https://learn.chatgpt.com/docs/pricing",
+      "official": true
+    },
+    {
+      "label": "Codex speed (Fast and Ultrafast)",
+      "url": "https://learn.chatgpt.com/codex/speed",
+      "official": true
+    },
+    {
+      "label": "How resets work in Codex",
+      "url": "https://help.openai.com/en/articles/20001498-how-resets-work-in-codex",
+      "official": true
+    },
+    {
+      "label": "Paid weekly Work and Codex rate limit resets",
+      "url": "https://help.openai.com/en/articles/20001507-paid-weekly-work-and-codex-rate-limit-resets",
+      "official": true
+    },
+    {
+      "label": "Using credits for flexible usage in ChatGPT",
+      "url": "https://help.openai.com/en/articles/12642688-using-credits-for-flexible-usage-in-chatgpt",
+      "official": true
+    },
+    {
+      "label": "Understand ChatGPT and Codex usage limits",
+      "url": "https://help.openai.com/en/articles/20001625-understand-chatgpt-and-codex-usage-limits",
+      "official": true
+    },
+    {
+      "label": "ChatGPT pricing",
+      "url": "https://chatgpt.com/pricing",
+      "official": true
+    }
+  ]
+}

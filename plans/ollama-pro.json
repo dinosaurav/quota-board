@@ -1,0 +1,92 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "ollama-pro",
+  "name": "Ollama Pro",
+  "vendor": "Ollama",
+  "status": "active",
+  "price": {
+    "amount": 20,
+    "currency": "USD",
+    "period": "month",
+    "note": "$20 a month, or $200 a year."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Ollama settings",
+    "url": "https://ollama.com/settings"
+  },
+  "meters": [
+    {
+      "id": "ollama-month",
+      "label": "Monthly included usage",
+      "hint": "$60 of usage. See ollama.com/settings",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets on the day of the month your subscription started, on monthly and annual plans.",
+        "stipulations": [
+          "Usage is the dollar value of the tokens you use, at each model's per-token rate. Some models have cheaper cached-input and off-peak rates.",
+          "Unused credit is lost at the reset.",
+          "Switching plans resets usage, but the reset day stays on your original start date.",
+          "Usage data can lag behind your requests."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Included credit is spent first, then purchased credit. Any plan can buy credit. Ollama's pricing post says you can keep going at the same per-token rate, but the Max page still calls extra usage \"coming\". Ollama doesn't say what happens with no purchased credit.",
+  "card": {
+    "how": [
+      "$60 of cloud model usage a month, counted at each model's per-token rate.",
+      "No 5-hour or weekly limit on the current plan. The month is the only window.",
+      "Up to 3 requests at once. Extra requests queue, and are rejected when the queue is full."
+    ],
+    "ext": [
+      "Open models from other labs, priced per token: gpt-oss, DeepSeek V4, Kimi K3, GLM-5.x, MiniMax, Nemotron, Gemma 4 and more. The full list is at ollama.com/search?c=cloud.",
+      "Claude Code: run \"ollama launch claude\", or set ANTHROPIC_BASE_URL=https://ollama.com, ANTHROPIC_AUTH_TOKEN to your Ollama API key and ANTHROPIC_API_KEY to empty.",
+      "Ollama has official setup pages for Codex CLI, OpenCode and Cline."
+    ],
+    "quirks": [
+      "Subscribers from before 31 Aug 2026 who keep auto-renewing stay on the old plan, with GPU-time 5-hour and weekly limits. Changing tier or billing cycle, or resubscribing, moves you to credits.",
+      "Cloud models don't support structured outputs.",
+      "In Claude Code, hosted web search and advanced tool controls aren't fully supported. Claude settings files can override the env vars, so check /status.",
+      "Ollama recommends a context length of 64k or more for larger repositories.",
+      "Cloud models can be retired. See the model lifecycle page.",
+      "GET ollama.com/api/usage reports dollars and tokens but no percentage or reset time. GET ollama.com/api/balance shows remaining credit.",
+      "Pro adds \"larger Pro models\", but Ollama doesn't list which ones."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Ollama pricing",
+      "url": "https://ollama.com/pricing",
+      "official": true
+    },
+    {
+      "label": "Transparent pricing (31 Aug 2026)",
+      "url": "https://ollama.com/blog/transparent-pricing",
+      "official": true
+    },
+    {
+      "label": "Ollama Cloud docs",
+      "url": "https://docs.ollama.com/cloud",
+      "official": true
+    },
+    {
+      "label": "Cloud usage",
+      "url": "https://docs.ollama.com/cloud/usage.md",
+      "official": true
+    },
+    {
+      "label": "Cloud usage API",
+      "url": "https://docs.ollama.com/api/cloud-usage.md",
+      "official": true
+    },
+    {
+      "label": "Claude Code integration",
+      "url": "https://docs.ollama.com/integrations/claude-code.md",
+      "official": true
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "claude-pro",
+  "name": "Claude Pro",
+  "vendor": "Anthropic",
+  "status": "active",
+  "price": {
+    "amount": 20,
+    "currency": "USD",
+    "period": "month",
+    "note": "$20 a month billed monthly, or $200 a year billed up front ($17 a month). US web price; mobile and local prices can differ."
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "claude",
+    "tiers": []
+  },
+  "check": {
+    "label": "Settings → Usage",
+    "url": "https://claude.ai/settings/usage"
+  },
+  "meters": [
+    {
+      "id": "claude-5h",
+      "label": "5-hour session",
+      "hint": "Starts at your first message",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "The window opens with your first message and resets in full 5 hours later.",
+        "stipulations": [
+          "claude.ai (web, desktop, mobile), Claude Code, Cowork and IDE use all count toward the same window.",
+          "Longer messages, large files, long conversations and heavier models use the window faster.",
+          "Once per weekly period, Claude Code may finish a response in progress after you hit this limit (\"wrapping up\"). That overrun counts toward the weekly limit."
+        ]
+      }
+    },
+    {
+      "id": "claude-week",
+      "label": "Weekly, all models",
+      "hint": "Fixed time for your account",
+      "period": "week",
+      "reset": {
+        "type": "fixed-weekly-account",
+        "rule": "Resets at a fixed day and time assigned to your account.",
+        "stipulations": [
+          "The reset time doesn't move when you start using Claude or when your subscription renews.",
+          "Every Claude model and surface counts toward this one weekly limit.",
+          "Since 14 Sep 2026, the weekly limit in Claude Code is 25% higher than it was before the May to September promotion. Other Claude products didn't get this increase.",
+          "Fable models don't use this limit on Pro. They bill to usage credits."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Blocked at the limit unless you turn on usage credits (Settings → Usage). Credits bill at standard API rates up to a monthly spend limit you set, or unlimited. Credits bought from 7 Dec 2026 expire 12 months after purchase. Pro doesn't include API credits.",
+  "card": {
+    "how": [
+      "A 5-hour session window and a weekly window across all models.",
+      "Opus, Sonnet and Haiku are included. Fable models are not: they run on usage credits from the first message.",
+      "Every Claude surface draws from the same limits."
+    ],
+    "ext": [
+      "Claude models only.",
+      "Claude Code works in VS Code, Cursor and other VS Code forks, and JetBrains IDEs. IDE use counts toward the same limits."
+    ],
+    "quirks": [
+      "If ANTHROPIC_API_KEY is set in your environment, Claude Code bills the API instead of your plan.",
+      "Claude Code can offer to buy API credits when you hit a limit. Decline to stay on your plan.",
+      "The free Fable 5.2 launch week and its one limit reset for Pro expired on 16 Nov 2026."
+    ]
+  },
+  "events": [
+    {
+      "date": "2026-12-07",
+      "what": "Usage credits bought from this date expire 12 months after purchase."
+    },
+    {
+      "date": "2026-12-10",
+      "what": "One free full limit reset (all models, 5-hour and weekly) for Pro, Max, Ultra and Team expires at 2:00 pm PT. Look for it under Settings → Usage → Limit resets.",
+      "unverified": true,
+      "source": "https://pasqualepillitteri.it/en/news/32912/claude-free-full-reset-limit-bugs-december-10"
+    }
+  ],
+  "sources": [
+    {
+      "label": "Claude pricing",
+      "url": "https://claude.com/pricing",
+      "official": true
+    },
+    {
+      "label": "What is the Pro plan?",
+      "url": "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan",
+      "official": true
+    },
+    {
+      "label": "Fable models on your plan",
+      "url": "https://support.claude.com/en/articles/15424964-claude-fable-models-on-your-plan",
+      "official": true
+    },
+    {
+      "label": "Fable 5.2 launch offers",
+      "url": "https://support.claude.com/en/articles/17506494-claude-fable-5-2-launch-offers",
+      "official": true
+    },
+    {
+      "label": "Usage credits",
+      "url": "https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans",
+      "official": true
+    },
+    {
+      "label": "Claude Code with Pro, Max or Ultra",
+      "url": "https://support.claude.com/en/articles/11145838-using-claude-code-with-your-pro-or-max-plan",
+      "official": true
+    },
+    {
+      "label": "Claude Code weekly limits promotion (May to Sep 2026)",
+      "url": "https://support.claude.com/en/articles/15910845",
+      "official": true
+    },
+    {
+      "label": "What is a limit reset?",
+      "url": "https://support.claude.com/en/articles/17007452-what-is-a-limit-reset",
+      "official": true
+    },
+    {
+      "label": "Free full reset report (third-party)",
+      "url": "https://pasqualepillitteri.it/en/news/32912/claude-free-full-reset-limit-bugs-december-10",
+      "official": false
+    }
+  ]
+}

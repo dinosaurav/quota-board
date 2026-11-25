@@ -1,0 +1,162 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "perplexity-pro",
+  "name": "Perplexity Pro",
+  "vendor": "Perplexity",
+  "status": "active",
+  "price": {
+    "amount": 200,
+    "currency": "USD",
+    "period": "year",
+    "note": "$17 a month billed annually. Monthly billing is reported at $20 (third-party report, unconfirmed). Education Pro is $10 a month with SheerID verification."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Perplexity Settings → Usage",
+    "url": "https://www.perplexity.ai/settings"
+  },
+  "meters": [
+    {
+      "id": "perplexity-week",
+      "label": "Pro Searches",
+      "hint": "Weekly, sized for \"average use\". Settings → Usage",
+      "period": "week",
+      "reset": {
+        "type": "unknown",
+        "rule": "A weekly limit. Perplexity doesn't publish the count or the reset day.",
+        "stipulations": [
+          "Best mode has no quota.",
+          "Advanced-model access may be limited during weeks of especially heavy usage.",
+          "File uploads have a separate weekly limit."
+        ]
+      }
+    },
+    {
+      "id": "perplexity-research-month",
+      "label": "Research (Deep Research)",
+      "hint": "Monthly. Settings → Usage",
+      "period": "month",
+      "reset": {
+        "type": "unknown",
+        "rule": "Recovers gradually on a rolling basis. A billing date or renewal doesn't reset it, and no exact reset time is shown.",
+        "stipulations": [
+          "Perplexity doesn't publish the count for consumer plans. For scale, Enterprise Pro gets 50 a month."
+        ]
+      }
+    },
+    {
+      "id": "perplexity-agent-month",
+      "label": "Browser Agent (Comet)",
+      "hint": "Monthly. Settings → Usage",
+      "period": "month",
+      "reset": {
+        "type": "unknown",
+        "rule": "A monthly limit. Perplexity doesn't publish the count or the reset day.",
+        "stipulations": [
+          "Comet in Work mode spends Computer credits. Comet in Search mode doesn't."
+        ]
+      }
+    },
+    {
+      "id": "perplexity-create-month",
+      "label": "Create files and apps",
+      "hint": "Monthly. Settings → Usage",
+      "period": "month",
+      "windowSeconds": 2592000,
+      "reset": {
+        "type": "unknown",
+        "rule": "Resets every 30 days. Perplexity doesn't say from which date.",
+        "stipulations": [
+          "Formerly called Labs."
+        ]
+      }
+    },
+    {
+      "id": "perplexity-computer-week",
+      "label": "Computer allowance",
+      "hint": "\"Included in Pro\" on the Usage page",
+      "period": "week",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "A weekly allowance that starts at your first use and doesn't roll over.",
+        "stipulations": [
+          "Credits are spent in this order: weekly included usage, then bonus, then monthly, then purchased.",
+          "100 credits = $1. Auto-refill is off by default.",
+          "Purchased credits expire after a year of not using Computer.",
+          "Ask searches don't use credits.",
+          "This weekly allowance is still rolling out to accounts gradually."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Searches and Research pause at their limits until they recover. Computer can continue on bought credits, with auto-refill at 500 credits if you turn it on. The Pro spend cap is fixed and can't be raised.",
+  "card": {
+    "how": [
+      "Weekly Pro Searches, plus monthly Research, Browser Agent and Create limits, sized for average use. No counts are published.",
+      "A weekly Computer credit allowance. New subscribers get 4,000 bonus credits that expire in about 30 days.",
+      "Enhanced image generation and limited video."
+    ],
+    "ext": [
+      "Models from other companies: GPT-6.2 Sol, Gemini 4 Neon, Claude Sonnet 5.5 (with Thinking), Grok 4.7, Kimi K3, GLM 5.3 and Nemotron 3.5 Super VL.",
+      "These models work inside Perplexity on the web only, not through the API. Computer has its own model list.",
+      "No API credits are included."
+    ],
+    "quirks": [
+      "Accounts on a promo code get lower limits. Perplexity confirmed this on 19 May 2026.",
+      "Free or fully discounted promo plans usually get no bonus credits.",
+      "The pricing page says \"unlimited Pro Searches\" but the plan table lists a weekly limit.",
+      "Users report advanced-model limits of about 100 to 150 queries a week since May 2026 (third-party report, unconfirmed).",
+      "The old $5 monthly API credit is gone. An older help article still lists it.",
+      "Upgrading to Max on mobile after subscribing on the web creates a second, separate subscription."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Perplexity pricing",
+      "url": "https://www.perplexity.ai/hub/pricing",
+      "official": true
+    },
+    {
+      "label": "Plan comparison (help)",
+      "url": "https://www.perplexity.ai/help-center/en/articles/11187416",
+      "official": true
+    },
+    {
+      "label": "Computer credits (help)",
+      "url": "https://www.perplexity.ai/help-center/en/articles/13838041",
+      "official": true
+    },
+    {
+      "label": "Perplexity Max (help)",
+      "url": "https://www.perplexity.ai/help-center/en/articles/11680686",
+      "official": true
+    },
+    {
+      "label": "Deep Research (help)",
+      "url": "https://www.perplexity.ai/help-center/en/articles/10738684",
+      "official": true
+    },
+    {
+      "label": "Models (help)",
+      "url": "https://www.perplexity.ai/help-center/en/articles/10354919",
+      "official": true
+    },
+    {
+      "label": "Perplexity Pro (help)",
+      "url": "https://www.perplexity.ai/help-center/en/articles/10352901",
+      "official": true
+    },
+    {
+      "label": "Pro advanced-model limits reduced (Android Authority)",
+      "url": "https://www.androidauthority.com/perplexity-pro-advanced-ai-limits-reduced-3667942/",
+      "official": false
+    },
+    {
+      "label": "Pro API credit removed (Goosed)",
+      "url": "https://www.goosed.ie/news/perplexity-pro-quietly-removes-free-api-credits",
+      "official": false
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "github-copilot-free",
+  "name": "GitHub Copilot Free",
+  "vendor": "GitHub",
+  "status": "active",
+  "price": {
+    "amount": 0,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Settings → Billing → AI usage",
+    "url": "https://github.com/settings/billing"
+  },
+  "meters": [
+    {
+      "id": "copilot-credits-month",
+      "label": "AI Credits",
+      "hint": "Amount not published. Settings → Billing → AI usage shows what you've used.",
+      "period": "month",
+      "reset": {
+        "type": "calendar-month",
+        "rule": "Resets on the 1st of each calendar month at 00:00 UTC, whatever your billing date.",
+        "stipulations": [
+          "Chat, Copilot CLI, cloud agent, Spaces, Spark, third-party agents and code review spend credits. Code completions and next edit suggestions don't.",
+          "Each model charges its own per-token API price. There are no multipliers and no free models.",
+          "Prices roughly double above the long-context threshold: 200K or 272K tokens, 100K for Claude Haiku 5.5.",
+          "Code review also uses GitHub Actions minutes.",
+          "Unused credits don't carry over."
+        ]
+      }
+    },
+    {
+      "id": "copilot-completions-month",
+      "label": "Code completions",
+      "hint": "2,000 a month. Shown in the Copilot status menu in your IDE.",
+      "period": "month",
+      "reset": {
+        "type": "calendar-month",
+        "rule": "Monthly. GitHub doesn't say whether this resets on the 1st with credits or on another date.",
+        "stipulations": [
+          "Counts code completions and next edit suggestions.",
+          "Paid plans have no completion limit."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "At either limit that feature stops until it resets. Free can't buy additional usage; upgrade to Pro or higher instead.",
+  "card": {
+    "how": [
+      "A small monthly AI Credits allowance for Chat and Copilot CLI. GitHub doesn't publish the amount.",
+      "2,000 code completions a month. Auto model selection only."
+    ],
+    "ext": [
+      "Works in VS Code, Visual Studio, JetBrains, Xcode, Eclipse and Copilot CLI.",
+      "No cloud agent and no third-party agents (Claude Code, Codex) on Free."
+    ],
+    "quirks": [
+      "You can't pick a model. Auto selection chooses for you.",
+      "Free gets the Standard Copilot Fusion tier only."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Usage-based billing for individuals",
+      "url": "https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals",
+      "official": true
+    },
+    {
+      "label": "Copilot plans (docs)",
+      "url": "https://docs.github.com/en/copilot/get-started/plans",
+      "official": true
+    },
+    {
+      "label": "Copilot plans",
+      "url": "https://github.com/features/copilot/plans",
+      "official": true
+    },
+    {
+      "label": "Models and pricing",
+      "url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+      "official": true
+    },
+    {
+      "label": "Moving to usage-based billing (changelog)",
+      "url": "https://github.blog/changelog/2026/04/27/github-copilot-is-moving-to-usage-based-billing/",
+      "official": true
+    },
+    {
+      "label": "Usage limits",
+      "url": "https://docs.github.com/en/copilot/concepts/usage-limits",
+      "official": true
+    },
+    {
+      "label": "Monitor AI usage",
+      "url": "https://docs.github.com/en/copilot/how-tos/manage-and-track-spending/monitor-ai-usage",
+      "official": true
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "antigravity-free",
+  "name": "Antigravity Free",
+  "vendor": "Google",
+  "status": "active",
+  "price": {
+    "amount": 0,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "antigravity"
+  },
+  "check": {
+    "label": "Antigravity settings",
+    "url": "https://antigravity.google/docs/plans"
+  },
+  "meters": [
+    {
+      "id": "ag-gemini-week",
+      "label": "Antigravity Gemini, weekly",
+      "hint": "Gemini 4 Hydrogen; Gemini 3.8 Flash until 30 Nov",
+      "period": "week",
+      "reset": {
+        "type": "rolling-weekly",
+        "rule": "Refreshes fully 7 days after the window starts. The Antigravity CLI shows the exact time.",
+        "stipulations": [
+          "Your weekly limit is tied to your tier.",
+          "Free and AI Plus have no 5-hour window. The quota refreshes weekly.",
+          "Limits depend on available capacity."
+        ]
+      }
+    },
+    {
+      "id": "ag-3p-week",
+      "label": "Antigravity Claude + GPT, weekly",
+      "hint": "Claude 4.6 and GPT-OSS; removed 30 Nov",
+      "period": "week",
+      "reset": {
+        "type": "rolling-weekly",
+        "rule": "Refreshes fully 7 days after the window starts. The Antigravity CLI shows the exact time.",
+        "stipulations": [
+          "Your weekly limit is tied to your tier.",
+          "These models are removed on 30 Nov 2026. After that, this tier has no Claude or GPT models."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "You stop at the limit until the weekly quota refreshes. The free tier can't buy AI credits.",
+  "card": {
+    "how": [
+      "A baseline agent quota that refreshes weekly. There is no 5-hour window.",
+      "Unlimited Tab completions and every product feature, including the CLI and scheduled tasks."
+    ],
+    "ext": [
+      "Includes Claude Sonnet 4.6, Claude Opus 4.6 and GPT-OSS-120b until 30 Nov 2026. After that, Gemini 4 Hydrogen only."
+    ],
+    "quirks": [
+      "Antigravity doesn't report a tier for free accounts, so pick this plan with `quota-board use antigravity-free`.",
+      "Run `/usage` in the Antigravity CLI for exact remaining quota and reset times.",
+      "Limits depend on available capacity and aren't guaranteed.",
+      "Antigravity needs you to be 18 or older.",
+      "Workspace accounts get a smaller \"Antigravity Starter Quota\" instead of this tier."
+    ]
+  },
+  "events": [
+    {
+      "date": "2026-11-30",
+      "what": "Antigravity removes Claude Sonnet 4.6, Claude Opus 4.6, GPT-OSS-120b and Gemini 3.8 Flash from this tier. Gemini 4 Hydrogen stays."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Antigravity pricing",
+      "url": "https://antigravity.google/pricing",
+      "official": true
+    },
+    {
+      "label": "Antigravity plans",
+      "url": "https://antigravity.google/docs/plans",
+      "official": true
+    },
+    {
+      "label": "Antigravity for Workspace accounts",
+      "url": "https://antigravity.google/docs/workspace",
+      "official": true
+    }
+  ]
+}

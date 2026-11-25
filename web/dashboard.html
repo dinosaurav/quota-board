@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quota Board</title>
+<!--QB_BOOT-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one instrument-panel column. Live meters first, then spendable resets, dated promos, and per-plan reference cards. */
+:root{
+  --bg:#F2F3EF; --panel:#FFFFFF; --ink:#1A1E22; --muted:#5D646B; --line:#D9DCD4; --track:#E6E8E1;
+  --accent:#2A55C9; --accent-soft:#E3EAFB;
+  --ok:#2C7A4B; --ok-soft:#DFF0E5; --warn:#A86A00; --warn-soft:#FBEFD6; --crit:#B83A26; --crit-soft:#F8E0DA; --spend:#6D3FC0; --spend-soft:#ECE3FA;
+  --f-display:"Archivo","Segoe UI",system-ui,sans-serif; --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121518; --panel:#1A1E23; --ink:#E7EAEC; --muted:#9AA3AB; --line:#2C3238; --track:#262B31;
+  --accent:#7FA2FF; --accent-soft:#1F2A47;
+  --ok:#5CC48A; --ok-soft:#183324; --warn:#E5AE45; --warn-soft:#3A2D12; --crit:#F07A64; --crit-soft:#3D1D17; --spend:#B593F5; --spend-soft:#2D2244; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121518; --panel:#1A1E23; --ink:#E7EAEC; --muted:#9AA3AB; --line:#2C3238; --track:#262B31;
+  --accent:#7FA2FF; --accent-soft:#1F2A47;
+  --ok:#5CC48A; --ok-soft:#183324; --warn:#E5AE45; --warn-soft:#3A2D12; --crit:#F07A64; --crit-soft:#3D1D17; --spend:#B593F5; --spend-soft:#2D2244; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0}
+.banner.note{border-color:var(--warn);background:var(--warn-soft)}
+.banner ul{margin:6px 0 0;padding-left:18px}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:2rem;font-weight:800}
+h2{font-size:1.3rem;font-weight:700}
+h3{font-size:1.05rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+header.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
+.top .lede{max-width:62ch;color:var(--muted);margin-top:6px}
+.stats{display:flex;gap:24px;flex-wrap:wrap}
+.stats div{display:flex;flex-direction:column}
+.stats .big{font-family:var(--f-mono);font-size:1.5rem;font-weight:500;font-variant-numeric:tabular-nums}
+section{display:flex;flex-direction:column;gap:14px}
+.sec-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.sync{font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.btn{font-family:var(--f-body);font-size:.85rem;padding:6px 12px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.banner{border:1px solid var(--crit);background:var(--crit-soft);border-radius:8px;padding:12px 14px}
+
+/* Meters */
+.plans{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;background:var(--panel);overflow:hidden}
+.plan-row{display:grid;grid-template-columns:210px 1fr;gap:16px;padding:16px;border-top:1px solid var(--line)}
+.plan-row:first-child{border-top:0}
+.plan-id{display:flex;flex-direction:column;gap:4px;min-width:0}
+.plan-id .name{font-family:var(--f-display);font-weight:700;font-size:1.02rem}
+.tag{display:inline-block;align-self:flex-start;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:4px;background:var(--accent-soft);color:var(--accent)}
+.plan-id .warn{font-size:.78rem;color:var(--warn)}
+.plan-id .cstat{font-size:.76rem;color:var(--muted)}
+.meters{display:flex;flex-direction:column;gap:14px;min-width:0}
+.meter{display:grid;grid-template-columns:minmax(150px,1.2fr) 2fr auto;gap:6px 14px;align-items:center}
+.meter .mlabel{font-size:.9rem;font-weight:500;min-width:0}
+.meter .mlabel small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+.bar{position:relative;height:12px;background:var(--track);border-radius:3px;overflow:hidden}
+.bar .fill{position:absolute;inset:0 auto 0 0;background:var(--ok);border-radius:3px}
+.bar .pace{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.55}
+.meter[data-st="tight"] .fill{background:var(--warn)}
+.meter[data-st="locked"] .fill{background:var(--crit)}
+.meter[data-st="spend"] .fill{background:var(--spend)}
+.meter[data-st="unset"] .fill{background:var(--muted);opacity:.4}
+.mctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.mctrl label{font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:4px}
+.mctrl input{font-family:var(--f-mono);font-size:.82rem;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+.mctrl input[type=number]{width:66px}
+.mctrl input[type=datetime-local]{width:190px}
+.mfoot{grid-column:2/4;display:flex;gap:8px 10px;flex-wrap:wrap;align-items:center;font-size:.8rem;color:var(--muted)}
+.mrule{grid-column:2/4;font-size:.78rem;color:var(--muted)}
+.bd{grid-column:2/4;display:flex;flex-wrap:wrap;gap:4px 14px;font-family:var(--f-mono);font-size:.74rem;color:var(--muted)}
+.bd span b{color:var(--ink);font-weight:500}
+.chip{display:inline-flex;align-items:center;gap:5px;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.src{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;padding:1px 6px;border-radius:4px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.src.live{border-color:var(--accent);color:var(--accent)}
+.st-ok{background:var(--ok-soft);color:var(--ok)}
+.st-tight{background:var(--warn-soft);color:var(--warn)}
+.st-locked{background:var(--crit-soft);color:var(--crit)}
+.st-spend{background:var(--spend-soft);color:var(--spend)}
+.st-unset{background:var(--track);color:var(--muted)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);align-items:center}
+
+/* Resets */
+.resets{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.rcard{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.rcard .count{font-family:var(--f-mono);font-size:1.3rem;font-variant-numeric:tabular-nums}
+.rcard ul{margin:0;padding-left:18px;font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+
+/* Router */
+
+/* Timeline */
+.timeline{display:flex;flex-direction:column;border-left:2px solid var(--line);margin-left:6px}
+.ev{position:relative;padding:0 0 16px 20px;display:grid;grid-template-columns:120px 1fr;gap:4px 16px}
+.ev::before{content:"";position:absolute;left:-7px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--panel);border:2px solid var(--accent)}
+.ev.past::before{border-color:var(--line)}
+.ev.past{opacity:.55}
+.ev.unv::before{border-style:dashed;border-color:var(--warn)}
+.ev .when{font-family:var(--f-mono);font-size:.82rem}
+.ev .when b{display:block;font-weight:500;color:var(--accent)}
+.ev.past .when b{color:var(--muted)}
+.ev .what{min-width:0}
+.ev .who{font-family:var(--f-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+
+/* Plan cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card .head{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.card .price{font-family:var(--f-mono);font-size:.95rem}
+.card h4{font-family:var(--f-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 4px;font-weight:500}
+.card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.88rem}
+.card ul ul{font-size:.82rem;color:var(--muted);margin-top:2px}
+.card .alert{font-size:.85rem;background:var(--warn-soft);color:var(--ink);border-radius:6px;padding:8px 10px}
+.card .foot{font-size:.82rem;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.card .srcs{display:flex;flex-wrap:wrap;gap:4px 12px}
+
+/* Tables */
+details{background:var(--panel);border:1px solid var(--line);border-radius:10px}
+summary{cursor:pointer;padding:14px 16px;font-family:var(--f-display);font-weight:700}
+.tbl-wrap{overflow-x:auto;padding:0 16px 16px}
+table{border-collapse:collapse;width:100%;font-size:.85rem;min-width:480px}
+th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+footer{font-size:.82rem;color:var(--muted);max-width:70ch}
+code{font-family:var(--f-mono);font-size:.85em;background:var(--track);padding:1px 4px;border-radius:3px}
+
+@media (max-width:760px){
+  .plan-row{grid-template-columns:1fr}
+  .meter{grid-template-columns:1fr auto}
+  .meter .bar{grid-column:1/3;grid-row:2}
+  .meter .mctrl{grid-column:1/3;grid-row:3;justify-content:flex-start}
+  .mfoot,.mrule,.bd{grid-column:1/3}
+  .ev{grid-template-columns:1fr}
+  .cards,.resets{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:no-preference){.bar .fill{transition:width .3s ease}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow" id="verified">Plan facts</div>
+      <h1>Quota Board</h1>
+      <p class="lede">All your AI plans in one place: live usage from each provider, when every window resets and on what terms, and the promos and deadlines coming up.</p>
+    </div>
+    <div class="stats">
+      <div><span class="eyebrow">Monthly spend</span><span class="big" id="spend">—</span></div>
+      <div><span class="eyebrow">Next reset</span><span class="big" id="next-reset">—</span></div>
+      <div><span class="eyebrow">Last collected</span><span class="big" id="collected-at">—</span></div>
+    </div>
+  </header>
+
+  <div class="banner" id="load-error" hidden></div>
+
+  <section aria-labelledby="h-now">
+    <div class="sec-head">
+      <h2 id="h-now">Right now</h2>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span class="sync" id="sync">Loading…</span>
+        <button class="btn" type="button" id="refresh-btn" hidden>Refresh now</button>
+      </div>
+    </div>
+    <p class="small muted" id="now-help">Meters marked <span class="src live">Live</span> come from your local logins. Others you can fill in by hand: copy "% used" from the provider's usage page and set the reset time once. Weekly and monthly resets roll forward on their own. The tick on each bar shows where you'd be at an even pace.</p>
+    <div class="banner" id="notes" hidden></div>
+    <div class="legend">
+      <span class="chip st-ok">On pace</span>
+      <span class="chip st-tight">Ahead of pace</span>
+      <span class="chip st-spend">Use it or lose it</span>
+      <span class="chip st-locked">Out until reset</span>
+      <span class="chip st-unset">No reading</span>
+    </div>
+    <div class="plans" id="plans"></div>
+  </section>
+
+  <section aria-labelledby="h-resets">
+    <h2 id="h-resets">Resets you can spend</h2>
+    <p class="small muted">One-off resets and reset credits from promos, with their conditions. Regular window resets are listed under each meter and in the plan cards.</p>
+    <div class="resets" id="resets"></div>
+  </section>
+
+  <section aria-labelledby="h-dates">
+    <h2 id="h-dates">Promos and deadlines</h2>
+    <p class="small muted">Dashed markers are reported only by third-party sites, not on the provider's own pages.</p>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <section aria-labelledby="h-plans">
+    <h2 id="h-plans">How each plan works</h2>
+    <div class="cards" id="cards"></div>
+    <div id="tables"></div>
+  </section>
+
+  <footer>Generated by <code>quota-board</code><span id="ver"></span>. Plan facts come from community-maintained files; if something is wrong, run <code>quota-board report</code>.</footer>
+</div>
+
+
+<!--QB_SCRIPT-->

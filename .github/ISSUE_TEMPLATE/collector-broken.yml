@@ -1,0 +1,29 @@
+name: Usage check failed
+description: A provider shows "failed", or its numbers don't match the provider's own usage page.
+labels: [collector]
+body:
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider
+      options: [Claude, ChatGPT / Codex, Cursor, Google Antigravity, OpenCode Go]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: The error line, or what quota-board shows vs. what the provider's usage page shows.
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: quota-board doctor output
+      description: Contains tier names and error messages, no personal details. Check before pasting.
+      render: text
+  - type: input
+    id: env
+    attributes:
+      label: OS and Node version
+      placeholder: macOS 15, Node 22.11

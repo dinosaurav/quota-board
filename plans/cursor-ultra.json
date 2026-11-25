@@ -1,0 +1,181 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "cursor-ultra",
+  "name": "Cursor Ultra",
+  "vendor": "Cursor",
+  "status": "active",
+  "price": {
+    "amount": 200,
+    "currency": "USD",
+    "period": "month",
+    "note": "$2,000 a year if billed annually."
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "cursor",
+    "tiers": [
+      "unified_ultra"
+    ]
+  },
+  "check": {
+    "label": "Grok dashboard → Usage",
+    "url": "https://grok.com/dashboard"
+  },
+  "meters": [
+    {
+      "id": "cursor-week",
+      "label": "Weekly pool",
+      "hint": "Grok 4.5 to 4.7 and Composer 2.5, shared with the Grok apps",
+      "period": "week",
+      "reset": {
+        "type": "fixed-weekly-account",
+        "rule": "Resets once a week. The next reset time is shown under Usage at grok.com/dashboard and in Cursor's settings.",
+        "stipulations": [
+          "Covers Grok 4.7, Grok 4.6, Grok 4.5 and Composer 2.5. Third-party models never draw from it.",
+          "One pool is shared by Agent in the editor, the CLI, Cloud Agents, Grok Bot and the Grok apps.",
+          "Each model drains the pool at a different rate. Cursor doesn't publish the pool size or the rates.",
+          "Unused usage doesn't roll over.",
+          "This plan's pool is 50x the Plus pool.",
+          "The reset isn't at a fixed weekday or hour. It falls 7 days after you joined the plan (third-party report, unconfirmed).",
+          "quota-board's Cursor collector doesn't read this pool yet. Enter readings by hand from the dashboard."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "When the weekly pool runs out you can wait for the reset, keep going on prepaid credit, or upgrade. Credit pays for Cursor models past the pool at per-model rates, and for third-party models from the first request at API list price. Buy credit under Additional usage credits at grok.com/dashboard/billing, or turn on Auto Top-up (off by default), which charges your card when the balance drops below a threshold you set. Credit expires 365 days after purchase. A monthly additional usage limit caps paid usage even when credit remains. If it is unset there is no cap.",
+  "card": {
+    "how": [
+      "One weekly pool for Cursor's own models (Grok 4.5 to 4.7, Composer 2.5), 50x the Plus pool, shared with the Grok apps and Grok Bot.",
+      "Auto runs in Cost mode only on individual plans. Cost mode bills as a Cursor-model request and draws from the weekly pool whatever model serves it.",
+      "Includes Cloud Agents, Automations, Bugbot code review and Grok Bot.",
+      "Priority model access at peak times, and earliest access to new products and models."
+    ],
+    "ext": [
+      "Third-party models (Claude, GPT, Gemini and others) are billed at API list price from prepaid credit, from the first request. None are included.",
+      "Requests with your own API key don't count against included usage on individual plans."
+    ],
+    "quirks": [
+      "Billing, plan changes and usage live at grok.com/dashboard, not cursor.com/dashboard.",
+      "Cursor doesn't say whether Tab completions are unlimited on the new plans.",
+      "Bugbot bills from included usage first, then from paid usage.",
+      "This is not the old Cursor Ultra. The old plan, which includes a third-party pool, is legacy and closed to new signups."
+    ]
+  },
+  "modelTable": {
+    "title": "Cursor models: pay-as-you-go rates past the weekly pool",
+    "note": "These models draw from the weekly pool first. Cursor doesn't publish how fast each one drains the pool. Past the pool, prepaid credit pays these rates per 1M tokens.",
+    "columns": [
+      "Model",
+      "Input $",
+      "Cache read $",
+      "Output $"
+    ],
+    "rows": [
+      [
+        "Composer 2.5",
+        0.5,
+        0.2,
+        2.5
+      ],
+      [
+        "Composer 2.5 (Fast)",
+        3,
+        0.5,
+        15
+      ],
+      [
+        "Grok 4.7",
+        2,
+        0.5,
+        6
+      ],
+      [
+        "Grok 4.7 (Fast)",
+        4,
+        1,
+        12
+      ],
+      [
+        "Grok 4.6",
+        2,
+        0.5,
+        6
+      ],
+      [
+        "Grok 4.5",
+        2,
+        0.5,
+        6
+      ]
+    ],
+    "footer": "Grok 4.7 input over 256k tokens is billed at 2x, up to 500k. Fast long context is 3x."
+  },
+  "events": [
+    {
+      "date": "2026-11-21",
+      "what": "GPT-5.6 Sol promotional pricing ended."
+    },
+    {
+      "date": "2026-11-30",
+      "what": "Gemini 4 Carbon intro pricing ends. From 1 Dec it costs $4 in, $0.20 cache read, $20 out per 1M tokens."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Cursor pricing",
+      "url": "https://cursor.com/pricing",
+      "official": true
+    },
+    {
+      "label": "Cursor pricing docs",
+      "url": "https://cursor.com/docs/account/pricing",
+      "official": true
+    },
+    {
+      "label": "Pricing and plans (help)",
+      "url": "https://cursor.com/help/account-and-billing/pricing",
+      "official": true
+    },
+    {
+      "label": "Usage limits",
+      "url": "https://cursor.com/help/models-and-usage/usage-limits",
+      "official": true
+    },
+    {
+      "label": "Usage-based charges",
+      "url": "https://cursor.com/help/account-and-billing/overages",
+      "official": true
+    },
+    {
+      "label": "Spend limits",
+      "url": "https://cursor.com/help/account-and-billing/spend-limits",
+      "official": true
+    },
+    {
+      "label": "Models and pricing",
+      "url": "https://cursor.com/docs/models-and-pricing",
+      "official": true
+    },
+    {
+      "label": "The X Subscription (Cursor help)",
+      "url": "https://cursor.com/help/the-x-subscription/overview",
+      "official": true
+    },
+    {
+      "label": "Introducing The X Subscription (x.ai)",
+      "url": "https://x.ai/news/x-subscription",
+      "official": true
+    },
+    {
+      "label": "Cursor usage limits: the weekly pool (DEV Community)",
+      "url": "https://dev.to/edtrackai/cursor-usage-limits-the-weekly-pool-legacy-plans-and-when-they-reset-31pf",
+      "official": false
+    },
+    {
+      "label": "Bugbot billing",
+      "url": "https://cursor.com/help/account-and-billing/bugbot-usage-based-billing",
+      "official": true
+    }
+  ]
+}

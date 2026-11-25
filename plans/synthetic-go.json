@@ -1,0 +1,108 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "synthetic-go",
+  "name": "Synthetic Go",
+  "vendor": "Synthetic",
+  "status": "active",
+  "price": {
+    "amount": 9,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Synthetic billing page",
+    "url": "https://synthetic.new/billing"
+  },
+  "meters": [
+    {
+      "id": "synthetic-week",
+      "label": "Weekly credit pool",
+      "hint": "Billing page at synthetic.new/billing, or GET api.synthetic.new/v2/quotas with your API key",
+      "period": "week",
+      "windowSeconds": 604800,
+      "reset": {
+        "type": "rolling-weekly",
+        "rule": "Never resets all at once. Every 202 minutes you get back 2% of the weekly limit, so a full refill from zero takes about a week.",
+        "stipulations": [
+          "This is the only limit. Synthetic has no 5-hour or monthly window.",
+          "Requests spend credits at discounted per-model token rates, so expensive models drain the pool faster.",
+          "Fast mode runs requests up to 2x faster and spends the pool at 2x.",
+          "Infinite mode requests never count against the pool but run much slower. Only DeepSeek V4.1 Flash supports it.",
+          "The plan card lists Fast mode and Infinite mode, but a note on the pricing page says they are included only with Big or Bigger.",
+          "Synthetic doesn't publish the pool size in dollars or tokens for any tier.",
+          "The quota API reports percent remaining and the time and size of the next refill. Calling it doesn't use the pool (third-party report, unconfirmed)."
+        ]
+      }
+    }
+  ],
+  "resets": [
+    {
+      "id": "synthetic-usage-reset",
+      "label": "Usage Reset",
+      "count": {
+        "min": 0,
+        "max": 1,
+        "rule": "One per month on every plan."
+      },
+      "expires": null,
+      "howTo": "Use it from the billing page at synthetic.new/billing.",
+      "stipulations": [
+        "Synthetic lists \"1 Usage Reset/month\" on every plan but doesn't explain what it restores or whether unused resets carry over.",
+        "The reset count and the button to spend it appear only on the billing page, not in the API (third-party report, unconfirmed)."
+      ]
+    }
+  ],
+  "overage": "At the limit, wait for the pool to refill, spend your Usage Reset, or pay for extra usage at API pricing. Synthetic doesn't publish a cap on extra usage. Upgrading to a bigger tier is the other option.",
+  "card": {
+    "how": [
+      "One weekly credit pool that refills 2% every 202 minutes. There is no 5-hour or monthly window.",
+      "The smallest pool.",
+      "Priority access. Up to 5 concurrent Infinite mode requests."
+    ],
+    "ext": [
+      "Every model is from another company: DeepSeek V4.1 Flash, Kimi K3.1 Pro, gpt-oss-120b, Qwen3.8-27B, GLM-4.7-Flash, GLM-5.3 (beta) and GLM-5.3-Flash. The Web Search API is included.",
+      "Claude Code: set ANTHROPIC_BASE_URL=https://api.synthetic.new/anthropic and ANTHROPIC_AUTH_TOKEN to your key. The guide suggests the aliases syn:large:vision (Kimi K3.1 Pro) and syn:small:text (GLM-4.7-Flash).",
+      "Official guides also cover OpenCode, Crush, GitHub Copilot, OpenClaw, Xcode and Octofriend. Other tools can use the OpenAI-compatible API."
+    ],
+    "quirks": [
+      "The pricing page contradicts itself on whether Fast and Infinite mode work on this plan. Check the billing page before relying on them.",
+      "In Claude Code, set CLAUDE_CODE_ATTRIBUTION_HEADER=0 so the prompt cache isn't busted on every request.",
+      "Model aliases such as syn:large:vision can point to a different model later. Use a full model name if you need the same one.",
+      "Billed monthly only."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Synthetic pricing",
+      "url": "https://synthetic.new/pricing",
+      "official": true
+    },
+    {
+      "label": "Synthetic rate limits",
+      "url": "https://synthetic.new/rate-limits",
+      "official": true
+    },
+    {
+      "label": "Synthetic models",
+      "url": "https://synthetic.new/pricing/models",
+      "official": true
+    },
+    {
+      "label": "Synthetic with Claude Code",
+      "url": "https://dev.synthetic.new/docs/guides/claude-code",
+      "official": true
+    },
+    {
+      "label": "Quota API notes (GitHub issue)",
+      "url": "https://github.com/cortexkit/insula/issues/43",
+      "official": false
+    },
+    {
+      "label": "Standard plan value (GitHub issue)",
+      "url": "https://github.com/RichardoC/factory-repo/issues/59",
+      "official": false
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "devin-max",
+  "name": "Devin Max",
+  "vendor": "Cognition",
+  "status": "active",
+  "price": {
+    "amount": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Settings → Usage & limits",
+    "url": "https://app.devin.ai/settings/usage"
+  },
+  "meters": [
+    {
+      "id": "devin-day",
+      "label": "Daily quota",
+      "hint": "Devin Desktop status bar → Plan Info, or app.devin.ai/settings/usage",
+      "period": "day",
+      "reset": {
+        "type": "daily",
+        "rule": "Resets each calendar day. Devin doesn't say at what time or in which time zone.",
+        "stipulations": [
+          "Measured in tokens at each model's price, so expensive models drain it faster.",
+          "Free models don't count. SWE-2 is free in Devin Desktop and CLI until 30 Nov, and SWE-2 Flash until 4 Dec.",
+          "Tab completions and inline edits are unlimited and don't count.",
+          "The daily quota is a little more than 1/7 of the weekly quota."
+        ]
+      }
+    },
+    {
+      "id": "devin-week",
+      "label": "Weekly quota",
+      "hint": "Devin Desktop status bar → Plan Info, or app.devin.ai/settings/usage",
+      "period": "week",
+      "reset": {
+        "type": "unknown",
+        "rule": "Resets weekly by calendar date. Devin doesn't say which day or time.",
+        "stipulations": [
+          "A request needs room in both the daily and the weekly quota.",
+          "Fast mode costs 2x on Claude Fable 5.2 and GPT-5.6 Sol.",
+          "Unused quota doesn't carry over."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "At the limit you wait for the reset, switch to a free model, or buy extra usage. Extra usage is a prepaid USD balance billed at API list prices, and the quota never caps it. It's off until you buy some. Purchased credits don't expire.",
+  "card": {
+    "how": [
+      "Daily and weekly token quotas, spent at each model's price. Much larger than Pro.",
+      "Devin's estimate for Max: 42 to 170 messages a day on the priciest models, 291 to 1,190 on lightweight ones."
+    ],
+    "ext": [
+      "Claude, GPT, Gemini and open models spend the quota at their API prices.",
+      "External agents over ACP (Claude Agent, Codex CLI, Gemini CLI, OpenCode) run in Devin Desktop and bill through your own account with that provider.",
+      "The Windsurf JetBrains plugin is in maintenance mode. Cognition suggests running Devin over ACP in JetBrains instead."
+    ],
+    "quirks": [
+      "Windsurf became Devin Desktop on 2 June 2026. The app is now Devin.app or Devin.exe, so allowlists for the old binary need updating.",
+      "The old prompt credits are gone. Leftover add-on credits became extra usage balance, refundable through support.",
+      "SWE-2 is free in Devin Desktop and the CLI but not in Devin cloud sessions.",
+      "Devin publishes no quota sizes, only estimated messages per day.",
+      "Max has no daily cap, only the weekly one (third-party report, unconfirmed).",
+      "Max adds Devin Bots."
+    ],
+    "alert": "Ends 30 Nov 2026: SWE-2 stops being free."
+  },
+  "events": [
+    {
+      "date": "2026-11-30",
+      "what": "SWE-2 stops being free in Devin Desktop and Devin CLI."
+    },
+    {
+      "date": "2026-12-01",
+      "what": "Gemini 4 Argon intro pricing ends."
+    },
+    {
+      "date": "2026-12-04",
+      "what": "SWE-2 Flash stops being free at 18:00 UTC. Then $0.10 per 1M input tokens."
+    },
+    {
+      "date": "2026-12-31",
+      "what": "Gemini 3.7 and 3.8 Flash intro pricing ($0.75 in, $3.75 out per 1M tokens) ends."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Devin pricing",
+      "url": "https://devin.ai/pricing",
+      "official": true
+    },
+    {
+      "label": "Devin Desktop quota",
+      "url": "https://docs.devin.ai/desktop/accounts/quota",
+      "official": true
+    },
+    {
+      "label": "Devin Desktop usage",
+      "url": "https://docs.devin.ai/desktop/accounts/usage",
+      "official": true
+    },
+    {
+      "label": "Devin Desktop models",
+      "url": "https://docs.devin.ai/desktop/models",
+      "official": true
+    },
+    {
+      "label": "Devin Desktop FAQ",
+      "url": "https://docs.devin.ai/desktop/devin-desktop-faq",
+      "official": true
+    },
+    {
+      "label": "ACP agents in Devin Desktop",
+      "url": "https://docs.devin.ai/desktop/acp",
+      "official": true
+    },
+    {
+      "label": "Windsurf pricing plans (blog)",
+      "url": "https://devin.ai/blog/windsurf-pricing-plans",
+      "official": true
+    }
+  ]
+}

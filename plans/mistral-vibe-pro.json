@@ -1,0 +1,107 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "mistral-vibe-pro",
+  "name": "Mistral Vibe Pro",
+  "vendor": "Mistral",
+  "status": "active",
+  "price": {
+    "amount": 14.99,
+    "currency": "USD",
+    "period": "month",
+    "note": "Excluding tax. Education pricing exists for verified students; Mistral's pages disagree on its price."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Mistral Admin Panel → Subscription",
+    "url": "https://admin.mistral.ai"
+  },
+  "meters": [
+    {
+      "id": "mistral-month",
+      "label": "Vibe Code monthly allowance",
+      "hint": "Admin Panel → Subscription, or in the CLI: Code → View organization usage",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets at the start of each billing period.",
+        "stipulations": [
+          "Vibe Code (CLI, IDE, web and desktop), Studio and the API share this allowance.",
+          "Mistral doesn't publish its size. The Admin Panel shows an estimate.",
+          "When it runs out you get error 2304 and usage stops until the next billing period, unless pay-as-you-go is on."
+        ]
+      }
+    },
+    {
+      "id": "mistral-flash-day",
+      "label": "Flash Answers",
+      "hint": "150 a day. Mistral doesn't show a counter",
+      "period": "day",
+      "reset": {
+        "type": "unknown",
+        "rule": "Up to 150 Flash Answers a day. Mistral doesn't say what time the day resets.",
+        "stipulations": [
+          "Subject to fair usage limits."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Pay-as-you-go at API rates from prepaid credits. It is off by default, and Vibe Code stops when the balance hits zero. Plans bought through Google, Apple, Free Mobile or Orange can't turn on pay-as-you-go.",
+  "card": {
+    "how": [
+      "Chat: up to 6x Free messages, 5x web searches and 40x image generation. More extended thinking and deep research, with no numbers.",
+      "Vibe Code has a monthly allowance shared with Studio and the API. Mistral calls it enough for full-time development.",
+      "Libraries up to 15 GB."
+    ],
+    "ext": [
+      "Mistral models only: Mistral Medium 3.5, Devstral 2 and Devstral 2 Small. Mistral Large 4 is in preview in Vibe Code; Mistral doesn't say which plans get it.",
+      "The Vibe CLI can also run on your own API key, which bills API rates instead of the plan."
+    ],
+    "quirks": [
+      "Le Chat was renamed Vibe. Plans, history and login carried over unchanged.",
+      "Chat limits are stated only as multiples of Free, and Free's numbers aren't published. All are subject to fair usage.",
+      "Mistral doesn't say when the message and web search limits reset.",
+      "Education plan: verified students only, up to 12 months, and only if you haven't used Vibe or Le Chat before.",
+      "Developers in Europe can get 3 months of Pro free with code LECHONK, first come first served. It is not on any Mistral page (third-party report, unconfirmed)."
+    ]
+  },
+  "events": [
+    {
+      "date": "2026-11-17",
+      "what": "Vibe Desktop for macOS and Windows released.",
+      "source": "https://docs.mistral.ai/resources/release-notes"
+    }
+  ],
+  "sources": [
+    {
+      "label": "Mistral pricing",
+      "url": "https://mistral.ai/pricing",
+      "official": true
+    },
+    {
+      "label": "Subscriptions",
+      "url": "https://docs.mistral.ai/admin/billing-usage/subscriptions",
+      "official": true
+    },
+    {
+      "label": "Usage limits",
+      "url": "https://docs.mistral.ai/admin/billing-usage/usage-limits",
+      "official": true
+    },
+    {
+      "label": "Le Chat is now Vibe",
+      "url": "https://help.mistral.ai/en/articles/682992-le-chat-is-now-vibe",
+      "official": true
+    },
+    {
+      "label": "Mistral Large 4",
+      "url": "https://mistral.ai/news/mistral-large-4",
+      "official": true
+    },
+    {
+      "label": "Mistral release notes",
+      "url": "https://docs.mistral.ai/resources/release-notes",
+      "official": true
+    }
+  ]
+}

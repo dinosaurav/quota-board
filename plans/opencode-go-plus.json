@@ -1,0 +1,117 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "opencode-go-plus",
+  "name": "OpenCode Go Plus",
+  "vendor": "OpenCode",
+  "status": "active",
+  "price": {
+    "amount": 40,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "opencode",
+    "tiers": []
+  },
+  "check": {
+    "label": "OpenCode console",
+    "url": "https://opencode.ai/go"
+  },
+  "meters": [
+    {
+      "id": "oc-5h",
+      "label": "5-hour window",
+      "hint": "20% of monthly",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "Opens at your first request and lasts 5 hours. You can spend up to 20% of the month in one window.",
+        "stipulations": [
+          "Before a window starts, the API reports a reset 5 hours from now."
+        ]
+      }
+    },
+    {
+      "id": "oc-week",
+      "label": "Weekly",
+      "hint": "50% of monthly",
+      "period": "week",
+      "auto": "monday-utc",
+      "reset": {
+        "type": "fixed-weekly-utc",
+        "rule": "Resets Monday 00:00 UTC. You can spend up to 50% of the month in one week.",
+        "stipulations": []
+      }
+    },
+    {
+      "id": "oc-month",
+      "label": "Monthly allowance",
+      "hint": "About 4x Go on every model",
+      "period": "month",
+      "reset": {
+        "type": "paid-period",
+        "rule": "Resets when a new paid period starts.",
+        "stipulations": [
+          "Each model has its own monthly $ cap. Usage counts as a share of that cap, so $1.50 on a $15-cap model uses 10%.",
+          "Token prices are the same on Go, Go Plus and Go Teams. Only the caps differ.",
+          "A refund is possible within 14 days if you have used almost none of the period."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Rate-limited until the window resets. Free models keep working, with a daily request cap. Extra Usage (off by default) can fall back to your console balance at pay-as-you-go prices.",
+  "card": {
+    "how": [
+      "The same models and windows as Go, with about 4x the allowance on every model. Kimi K3, for example, gets an estimated 392 requests per 5 hours and a $60 monthly cap, against 98 and $15 on Go.",
+      "No more than 20% of the month per 5 hours and 50% per week.",
+      "Only the subscriber and the workspace API keys get Go Plus limits. Other invited members get free models or the workspace balance only."
+    ],
+    "ext": [
+      "Models from other labs: Claude Haiku 5.5, GPT-6 Luna, Grok 4.7 and Gemini 4 Argon, plus Kimi, Qwen, GLM, DeepSeek, MiniMax and more. The model list is the same on every Go tier.",
+      "Works in Claude Code, Codex, Hermes (v0.21.6 or later), ZCode, Pi, jcode (v0.81.6 or later) and Kilo Code CLI through the Go API. OpenCode says it may not keep supporting them.",
+      "Known problems with GitHub Copilot Chat, Kimi Code, MiMo Code and DeepSeek Harness. Clients must send a stable x-opencode-session header."
+    ],
+    "quirks": [
+      "DeepSeek and LongCat models only work after you enable the Global region in Settings → Privacy.",
+      "Muse Spark only works after you allow endpoints that train on your data. Those endpoints are blocked by default.",
+      "The documented usage API is GET /inference/go/v1/usage. The live model list is at /inference/go/v1/models.",
+      "Decision and embedding models bill at list price with no Go discount, up to $40 a month.",
+      "Exact per-model caps for Go Plus are only on the Console Go page.",
+      "Third-party trackers report a DeepSeek V4.1 Flash cap of $200, raised from $160 around 9 Nov 2026 (third-party report, unconfirmed)."
+    ]
+  },
+  "events": [
+    {
+      "date": "2026-11-30",
+      "what": "Gemini 4 Argon 50% discount ends."
+    },
+    {
+      "date": "2026-11-30",
+      "what": "The DeepSeek zero-data-retention agreement runs to this date. OpenCode says it renews monthly."
+    }
+  ],
+  "sources": [
+    {
+      "label": "OpenCode Go docs",
+      "url": "https://opencode.ai/docs/go",
+      "official": true
+    },
+    {
+      "label": "OpenCode Go",
+      "url": "https://opencode.ai/go",
+      "official": true
+    },
+    {
+      "label": "Console: Go",
+      "url": "https://opencode.ai/docs/console/go/",
+      "official": true
+    },
+    {
+      "label": "Usage Pricing: OpenCode",
+      "url": "https://www.usagepricing.com/blueprint/opencode",
+      "official": false
+    }
+  ]
+}

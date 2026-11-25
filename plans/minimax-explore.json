@@ -1,0 +1,113 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "minimax-explore",
+  "name": "MiniMax M Plan Explore",
+  "vendor": "MiniMax",
+  "status": "active",
+  "price": {
+    "amount": 55,
+    "currency": "USD",
+    "period": "month",
+    "note": "Or about $550 a year (pay for 10 months, get 2 free)."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "MiniMax console usage, or mmx quota",
+    "url": "https://platform.minimax.io/console/usage"
+  },
+  "meters": [
+    {
+      "id": "minimax-5h",
+      "label": "5-hour window",
+      "hint": "MiniMax console usage page, or mmx quota. 3x",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "A fixed 5-hour block starts at your first request. Your next request after it ends starts a new one.",
+        "stipulations": [
+          "Covers text, speech and other models, but not image or video.",
+          "Usage is counted at each model's pay-as-you-go price. MiniMax-M3.1-Flash is $0.15 per million input tokens, $0.60 per million output and $0.015 per million cached reads.",
+          "Longer context, agent loops, higher effort and video use more.",
+          "MiniMax doesn't publish the quota in prompts or tokens.",
+          "Requests-per-minute throttles are separate and usually clear in about a minute."
+        ]
+      }
+    },
+    {
+      "id": "minimax-week",
+      "label": "Weekly",
+      "hint": "MiniMax console usage page, or mmx quota",
+      "period": "week",
+      "reset": {
+        "type": "rolling-weekly",
+        "rule": "A 7-day window starts at your first request. Your next request after it ends starts a new week.",
+        "stipulations": [
+          "Every model, including image and video, draws from this one pool.",
+          "The 5-hour and weekly windows reset independently. Unused quota doesn't carry over."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Included quota is spent first, then prepaid Credits, soonest-expiring first. Credits last 1 year. About $1 per 1,000 Credits (third-party report, unconfirmed). An M Plan key never charges your account balance.",
+  "card": {
+    "how": [
+      "A 5-hour window and a weekly window, both started by your first request. Whichever runs out first stops you.",
+      "3x the Go quota. MiniMax publishes no absolute numbers.",
+      "Adds H3 video and H3 Image Highspeed."
+    ],
+    "ext": [
+      "MiniMax models only: MiniMax-M3.1-Flash, H3 Image, speech, web search and multimodal understanding.",
+      "Claude Code: base URL https://api.minimax.io/anthropic, model MiniMax-M3.1-Flash[1m], with a 512K auto-compact window.",
+      "Codex, Cursor, OpenCode, Pi, Hermes Agent, OpenClaw or any OpenAI- or Anthropic-compatible tool works with an M Plan key. MiniMax Code needs no key. All share one quota."
+    ],
+    "quirks": [
+      "M Plan keys and pay-as-you-go keys aren't interchangeable. Only a pay-as-you-go key charges your balance.",
+      "In Claude Code, thinking is always on. Setting CLAUDE_CODE_EFFORT_LEVEL disables /effort. ANTHROPIC_* variables in your shell override the settings file.",
+      "No downgrades. Upgrades apply at once with the unused time credited. Annual subscribers can only upgrade to another annual plan.",
+      "Refunds are \"not automatically\" given.",
+      "Meant for one person's interactive use. MiniMax recommends pay-as-you-go for production.",
+      "M3.1-Flash-Preview is retired. Requests to it are served by M3.1-Flash.",
+      "Legacy Token Plan subscribers keep their price while auto-renew stays on. Turning auto-renew off is permanent, and upgrading to the M Plan drops old perks such as the 150% weekly limit, with no way back.",
+      "About 5 agents at once (third-party report, unconfirmed)."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "M Plan intro",
+      "url": "https://platform.minimax.io/docs/m-plan/intro.md",
+      "official": true
+    },
+    {
+      "label": "M Plan usage rules",
+      "url": "https://platform.minimax.io/docs/m-plan/usage-rules.md",
+      "official": true
+    },
+    {
+      "label": "M Plan FAQ",
+      "url": "https://platform.minimax.io/docs/m-plan/faq.md",
+      "official": true
+    },
+    {
+      "label": "Changing plans",
+      "url": "https://platform.minimax.io/docs/m-plan/change-plan.md",
+      "official": true
+    },
+    {
+      "label": "Token Plan notice",
+      "url": "https://platform.minimax.io/docs/m-plan/token-plan-notice.md",
+      "official": true
+    },
+    {
+      "label": "Claude Code setup",
+      "url": "https://platform.minimax.io/docs/m-plan/claude-code.md",
+      "official": true
+    },
+    {
+      "label": "Pricing overview",
+      "url": "https://platform.minimax.io/docs/pricing/overview.md",
+      "official": true
+    }
+  ]
+}

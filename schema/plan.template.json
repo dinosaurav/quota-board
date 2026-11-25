@@ -1,0 +1,80 @@
+{
+  "$schema": "./plan.schema.json",
+  "id": "vendor-plan",
+  "name": "Vendor Plan",
+  "vendor": "Vendor",
+  "status": "active",
+  "price": {
+    "amount": 0,
+    "currency": "USD",
+    "period": "month"
+  },
+  "detect": {
+    "collector": "vendor",
+    "tiers": [
+      "tier string the collector reports"
+    ]
+  },
+  "check": {
+    "label": "Where the user sees usage",
+    "url": "https://example.com/usage"
+  },
+  "meters": [
+    {
+      "id": "vendor-5h",
+      "label": "5-hour window",
+      "hint": "Short note shown under the label",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "One sentence: when this window resets.",
+        "stipulations": [
+          "What counts toward it, what it's shared with, exceptions, multipliers."
+        ]
+      }
+    }
+  ],
+  "resets": [
+    {
+      "id": "vendor-promo-reset",
+      "label": "Promo limit resets",
+      "count": {
+        "min": 1,
+        "max": 1,
+        "rule": "How many, and why."
+      },
+      "expires": "YYYY-MM-DDTHH:MM:SSZ",
+      "howTo": "Where to click.",
+      "stipulations": [
+        "Eligibility and what a reset does."
+      ]
+    }
+  ],
+  "overage": "What happens at the limit, and how paid overage works.",
+  "card": {
+    "how": [
+      "Plain sentences on how the limits work."
+    ],
+    "ext": [
+      "Models from other companies, and use in other tools."
+    ],
+    "quirks": [
+      "Anything surprising."
+    ],
+    "alert": "Optional: one urgent line."
+  },
+  "events": [
+    {
+      "date": "YYYY-MM-DD",
+      "what": "What ends or starts."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Pricing",
+      "url": "https://example.com/pricing",
+      "official": true
+    }
+  ],
+  "lastVerified": "YYYY-MM-DD"
+}

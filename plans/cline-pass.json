@@ -1,0 +1,90 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "cline-pass",
+  "name": "ClinePass",
+  "vendor": "Cline",
+  "status": "active",
+  "price": {
+    "amount": 9.99,
+    "currency": "USD",
+    "period": "month",
+    "note": "Standard price after an intro promo. A processing fee may apply."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Cline dashboard → Subscription",
+    "url": "https://app.cline.bot/dashboard/subscription?personal=true"
+  },
+  "meters": [
+    {
+      "id": "cline-5h",
+      "label": "5-hour window",
+      "hint": "app.cline.bot → Dashboard → Subscription",
+      "period": "5h",
+      "reset": {
+        "type": "unknown",
+        "rule": "A rolling 5-hour window. Cline doesn't say whether it starts at first use.",
+        "stipulations": [
+          "Cline publishes no numbers, only that limits are 2 to 5 times the standard API rate limits.",
+          "Some models have peak and off-peak rates. Cline doesn't define the hours."
+        ]
+      }
+    },
+    {
+      "id": "cline-week",
+      "label": "Weekly",
+      "hint": "app.cline.bot → Dashboard → Subscription",
+      "period": "week",
+      "reset": {
+        "type": "unknown",
+        "rule": "Resets each calendar week. Cline doesn't say which day or time zone.",
+        "stipulations": []
+      }
+    },
+    {
+      "id": "cline-month",
+      "label": "Monthly",
+      "hint": "app.cline.bot → Dashboard → Subscription",
+      "period": "month",
+      "reset": {
+        "type": "calendar-month",
+        "rule": "Resets each calendar month. Cline doesn't say which time zone.",
+        "stipulations": []
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Cline doesn't document what happens at a limit, and the pass has no paid overage. Pay-as-you-go Cline credits at provider cost are a separate option.",
+  "card": {
+    "how": [
+      "A flat monthly pass for open-weight models, with 5-hour, weekly and monthly limits. Cline publishes no limit sizes."
+    ],
+    "ext": [
+      "Open-weight models only: DeepSeek, GLM, Kimi, MiniMax, MiMo, Qwen and Muse Spark. No Claude, GPT or Gemini.",
+      "An OpenAI-compatible API at api.cline.bot/api/v1 lets other tools use the pass. Create a key under Settings → API Keys."
+    ],
+    "quirks": [
+      "GLM-5.2, Kimi K2.6, Kimi K2.7 Code and DeepSeek V4 Flash were removed for capacity. The marketing page still lists some of them.",
+      "Non-streaming API calls need the header X-Response-Format: openai.",
+      "The first month costs $4.99 (third-party report, unconfirmed)."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "ClinePass docs",
+      "url": "https://docs.cline.bot/getting-started/clinepass",
+      "official": true
+    },
+    {
+      "label": "ClinePass",
+      "url": "https://cline.bot/cline-pass",
+      "official": true
+    },
+    {
+      "label": "Cline pricing",
+      "url": "https://cline.bot/pricing",
+      "official": true
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "augment-standard",
+  "name": "Augment Code Standard",
+  "vendor": "Augment Code",
+  "status": "active",
+  "price": {
+    "amount": 20,
+    "currency": "USD",
+    "period": "month",
+    "note": "Flat price, no per-seat charge, up to 50 seats."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Augment dashboard → Usage",
+    "url": "https://app.augmentcode.com"
+  },
+  "meters": [
+    {
+      "id": "augment-usage-month",
+      "label": "Included usage",
+      "hint": "$20 a month. app.augmentcode.com shows what's left.",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets at the start of each billing cycle.",
+        "stipulations": [
+          "Model tokens cost the provider's API list price plus a 40% service fee. That leaves about $14.29 of model use in $20.",
+          "Compute costs $0.19 an hour in 5-minute steps, with no fee.",
+          "Models, the Context Engine and compute all draw from one balance, shared by everyone on the plan.",
+          "Haiku 5.5 costs 5x above 100K tokens. GPT-5.6 and GPT-6 double input above 272K.",
+          "Prorated if you start mid-cycle. Unused usage doesn't carry over."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "After the included $20, usage keeps billing automatically at the same rates. The docs describe no cap and no off switch. Top-ups outside your plan last 12 months.",
+  "card": {
+    "how": [
+      "$20 of usage a month, charged at API list price plus 40% on models.",
+      "One balance covers models, the Context Engine and compute for the whole team."
+    ],
+    "ext": [
+      "Claude, GPT, Gemini, Kimi, GLM and DeepSeek models.",
+      "Works in VS Code, JetBrains, Auggie CLI and Cosmos. The docs don't mention bring-your-own-key."
+    ],
+    "quirks": [
+      "Harness bought Cosmos, Auggie CLI and the Context Engine on 8 Oct 2026. Augment hasn't said what this means for plans or the IDE extensions.",
+      "The Indie, Developer and Max plans are gone from the pricing page.",
+      "Standard cost $60 before 2 Nov 2026 (third-party report, unconfirmed)."
+    ],
+    "alert": "Overage bills automatically with no cap."
+  },
+  "events": [
+    {
+      "date": "2027-01-21",
+      "what": "Gemini 3.7 Flash leaves the model pickers."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Augment pricing",
+      "url": "https://www.augmentcode.com/pricing",
+      "official": true
+    },
+    {
+      "label": "Credit-based pricing docs",
+      "url": "https://docs.augmentcode.com/models/credit-based-pricing",
+      "official": true
+    },
+    {
+      "label": "Augment Code next chapter (blog)",
+      "url": "https://augmentcode.com/blog/augment-code-next-chapter",
+      "official": true
+    }
+  ]
+}

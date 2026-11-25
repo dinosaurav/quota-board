@@ -1,0 +1,103 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "kimi-max",
+  "name": "Kimi Max",
+  "vendor": "Moonshot AI",
+  "status": "active",
+  "price": {
+    "amount": 99,
+    "currency": "USD",
+    "period": "month",
+    "note": "$99 a month, or $948 a year ($79 a month). China: ¥699 a month."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Kimi Code console, or /usage in the CLI",
+    "url": "https://www.kimi.com/code/console"
+  },
+  "meters": [
+    {
+      "id": "kimi-5h",
+      "label": "5-hour window",
+      "hint": "Kimi Code console, or /usage in the CLI",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "A rolling 5-hour window. Your limit recovers on its own as the window moves on.",
+        "stipulations": [
+          "The Kimi CLI, VS Code, Desktop and third-party tools draw on one quota. So do all your logged-in devices and API keys.",
+          "k3 uses about 2x the quota of k3-256k. HighSpeed models use about 2x as well.",
+          "Kimi doesn't publish a request count for any tier.",
+          "About 300 to 1,200 requests per 5 hours across tiers, with up to 30 at once (third-party report, unconfirmed)."
+        ]
+      }
+    },
+    {
+      "id": "kimi-month",
+      "label": "Monthly total",
+      "hint": "Settings → Subscription & Invoices → My Quota",
+      "period": "month",
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets at the start of each billing cycle.",
+        "stipulations": [
+          "Shared between Kimi on the web and app and Kimi Code.",
+          "When it runs out, Kimi Code is frozen until the reset or until you upgrade.",
+          "Unused quota doesn't carry over. Kimi doesn't publish the amount.",
+          "There is no weekly limit on current plans."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "Extra Usage is off by default. Turn it on to keep going after the plan quota, billed in RMB by actual use (about ¥0.03 for a simple request, about ¥1.6 for a complex task). A monthly spend cap is optional; without one there is no cap. Top-ups are at least ¥25, and the balance doesn't expire and isn't refundable. A \"Buy Extra Usage\" button appears at 80% used.",
+  "card": {
+    "how": [
+      "Kimi Code is part of the Kimi membership. There is no separate Kimi Code subscription.",
+      "A rolling 5-hour window and a monthly total. Whichever runs out first stops you.",
+      "Models: everything on Plus, plus k3 at 1M context, kimi-for-coding-highspeed (K2.7 Code HighSpeed) and K3.1 Pro Highspeed."
+    ],
+    "ext": [
+      "Moonshot's Kimi models only.",
+      "Claude Code: set the base URL to https://api.kimi.ai/coding/ (Anthropic-compatible). Nothing else is needed.",
+      "Codex, OpenCode and other OpenAI-compatible tools: https://api.kimi.ai/coding/v1, with Chat Completions and Responses. Kimi also documents Trae, Hermes Agent, and JetBrains and Zed through the Kimi CLI's ACP."
+    ],
+    "quirks": [
+      "Changing your client's User-Agent counts as a violation and can suspend your membership benefits.",
+      "Devices unused for more than 30 days are unbound. Run /login to restore one.",
+      "You can make up to 5 API keys in the Kimi Code console. Each is shown only once.",
+      "The pay-as-you-go Moonshot API at api.moonshot.ai is a separate product and doesn't use this plan.",
+      "Members from before the September 2026 relaunch may still be on a legacy plan, which also has a weekly window that resets 7 days from the subscription date. Switching is optional; an upgrade is prorated and takes effect at once.",
+      "Annual billing is available at a lower monthly rate.",
+      "Kimi's own pages disagree on Agent credits for Max and Ultra: one says 14x and 28x, another 5x and 10x."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Kimi Code membership",
+      "url": "https://www.kimi.com/code/docs/en/kimi-code/membership.html",
+      "official": true
+    },
+    {
+      "label": "Kimi membership pricing",
+      "url": "https://www.kimi.com/en/help/membership/membership-pricing",
+      "official": true
+    },
+    {
+      "label": "Kimi membership overview",
+      "url": "https://www.kimi.ai/help/membership/membership-overview",
+      "official": true
+    },
+    {
+      "label": "Kimi Code benefits",
+      "url": "https://www.kimi.com/en/help/kimi-code/benefits",
+      "official": true
+    },
+    {
+      "label": "Kimi coding plan guide",
+      "url": "https://www.kimi.com/resources/coding-plan",
+      "official": true
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "github-copilot-pro",
+  "name": "GitHub Copilot Pro",
+  "vendor": "GitHub",
+  "status": "active",
+  "price": {
+    "amount": 10,
+    "currency": "USD",
+    "period": "month",
+    "note": "Free for verified teachers and maintainers of popular open-source projects."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Settings → Billing → AI usage",
+    "url": "https://github.com/settings/billing"
+  },
+  "meters": [
+    {
+      "id": "copilot-credits-month",
+      "label": "AI Credits",
+      "hint": "1,500 credits ($15): 1,000 base plus 500 flex.",
+      "period": "month",
+      "reset": {
+        "type": "calendar-month",
+        "rule": "Resets on the 1st of each calendar month at 00:00 UTC, whatever your billing date.",
+        "stipulations": [
+          "Chat, Copilot CLI, cloud agent, Spaces, Spark, third-party agents and code review spend credits. Code completions and next edit suggestions don't.",
+          "Each model charges its own per-token API price. There are no multipliers and no free models.",
+          "Prices roughly double above the long-context threshold: 200K or 272K tokens, 100K for Claude Haiku 5.5.",
+          "Auto model selection in Chat or cloud agent is 10% off.",
+          "Base credits are spent first, then flex credits. GitHub says the flex amount can change from month to month.",
+          "Code review also uses GitHub Actions minutes.",
+          "Unused credits don't carry over."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "At the limit, Chat and agents stop until the 1st unless you set a budget for additional usage at github.com/settings/billing. Additional usage bills at the same per-token rates at month end, with alerts at 75%, 90% and 100% of the budget. GitHub doesn't say whether it's on by default for individuals; the old default budget was $0. There's no fallback to a cheaper model any more. Completions keep working. You can also upgrade mid-month and pay only the difference.",
+  "card": {
+    "how": [
+      "$15 of AI Credits a month (1,000 base plus 500 flex), spent at each model's per-token API price.",
+      "Credits reset on the 1st at 00:00 UTC. Completions and next edit suggestions are unlimited and free."
+    ],
+    "ext": [
+      "Claude, GPT, Gemini, Grok, Kimi and Microsoft MAI models are all available, each at its own per-token price.",
+      "Works in VS Code, Visual Studio, JetBrains, Xcode, Eclipse and Copilot CLI. Claude Code and Codex as third-party agents (public preview) spend the same credits.",
+      "No bring-your-own-key on individual plans."
+    ],
+    "quirks": [
+      "Since 1 June 2026 there are no premium requests or multipliers. Docs that still mention 300 premium requests and $0.04 per request are out of date.",
+      "Annual Pro and Pro+ subscribers stay on the old premium-request billing until the plan expires, then drop to Free.",
+      "Getting a Business or Enterprise seat cancels a personal Pro, Pro+ or Max plan, with a prorated refund.",
+      "Older clients can show wrong usage. Use VS Code 1.120, JetBrains plugin 1.9.1, Copilot CLI 1.0.48 or newer.",
+      "GitHub may apply temporary rate limits beyond the monthly credits. It publishes no numbers.",
+      "Pro gets the Standard Copilot Fusion tier only."
+    ]
+  },
+  "modelTable": {
+    "title": "GitHub Copilot: model prices per 1M tokens",
+    "note": "1 AI Credit is $0.01. 1M output tokens on Claude Opus 5.5 costs 2,000 credits; on GPT-6 Luna it costs 50.",
+    "columns": [
+      "Model",
+      "Input $",
+      "Output $"
+    ],
+    "rows": [
+      [
+        "MAI Code 2 Flash",
+        0.05,
+        0.25
+      ],
+      [
+        "GPT-6 Luna",
+        0.1,
+        0.5
+      ],
+      [
+        "Claude Haiku 5.5",
+        0.1,
+        0.5
+      ],
+      [
+        "MAI Code 2",
+        0.5,
+        2.5
+      ],
+      [
+        "Gemini 3.8 Flash",
+        0.75,
+        3.75
+      ],
+      [
+        "GPT-6.1 Terra",
+        1,
+        5
+      ],
+      [
+        "Gemini 4 Hydrogen",
+        1.5,
+        7.5
+      ],
+      [
+        "GPT-6.2 Sol",
+        2,
+        10
+      ],
+      [
+        "Claude Sonnet 5.5",
+        2,
+        10
+      ],
+      [
+        "Gemini 4 Argon",
+        2,
+        10
+      ],
+      [
+        "Grok 4.7",
+        2,
+        6
+      ],
+      [
+        "Kimi K3",
+        3,
+        15
+      ],
+      [
+        "Gemini 4 Neon",
+        3,
+        15
+      ],
+      [
+        "Claude Opus 5.5",
+        4,
+        20
+      ],
+      [
+        "GPT-5.6 Sol",
+        4,
+        20
+      ],
+      [
+        "GPT-6.2 Astra",
+        8,
+        40
+      ],
+      [
+        "Claude Fable 5.2",
+        8,
+        40
+      ]
+    ],
+    "footer": "Anthropic models also charge for cache writes. Free and Student plans get auto model selection only."
+  },
+  "events": [
+    {
+      "date": "2026-11-30",
+      "what": "Copilot Fusion 30% discount ends on paid plans. The docs say 30 Nov; the plans page banner says 31 Dec."
+    },
+    {
+      "date": "2026-12-01",
+      "what": "Gemini 4 Carbon price doubles to $4 in, $20 out per 1M tokens. Gemini 4 Argon promo price ends."
+    },
+    {
+      "date": "2026-12-31",
+      "what": "Gemini 3.8 Flash promo price ends."
+    },
+    {
+      "date": "2027-05-17",
+      "what": "MAI Code 2 and MAI Code 2 Flash promo prices end. Both then double."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Usage-based billing for individuals",
+      "url": "https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals",
+      "official": true
+    },
+    {
+      "label": "Copilot plans (docs)",
+      "url": "https://docs.github.com/en/copilot/get-started/plans",
+      "official": true
+    },
+    {
+      "label": "Copilot plans",
+      "url": "https://github.com/features/copilot/plans",
+      "official": true
+    },
+    {
+      "label": "Models and pricing",
+      "url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+      "official": true
+    },
+    {
+      "label": "Moving to usage-based billing (changelog)",
+      "url": "https://github.blog/changelog/2026/04/27/github-copilot-is-moving-to-usage-based-billing/",
+      "official": true
+    },
+    {
+      "label": "Flex allotments and the Max plan",
+      "url": "https://github.blog/news-insights/company-news/github-copilot-individual-plans-introducing-flex-allotments-in-pro-and-pro-and-a-new-max-plan/",
+      "official": true
+    },
+    {
+      "label": "Copilot Fusion",
+      "url": "https://docs.github.com/en/copilot/concepts/models/copilot-fusion",
+      "official": true
+    },
+    {
+      "label": "Usage limits",
+      "url": "https://docs.github.com/en/copilot/concepts/usage-limits",
+      "official": true
+    },
+    {
+      "label": "Monitor AI usage",
+      "url": "https://docs.github.com/en/copilot/how-tos/manage-and-track-spending/monitor-ai-usage",
+      "official": true
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "warp-build",
+  "name": "Warp Build",
+  "vendor": "Warp",
+  "status": "active",
+  "price": {
+    "amount": 20,
+    "currency": "USD",
+    "period": "month",
+    "note": "$18 a month billed yearly."
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Warp app → Settings → Billing and usage",
+    "url": "https://docs.warp.dev/support-and-community/plans-and-billing/credits/"
+  },
+  "meters": [
+    {
+      "id": "warp-usage-month",
+      "label": "Included usage",
+      "hint": "$20 a month. In Warp: Settings → Billing and usage shows balance and reset date.",
+      "period": "month",
+      "windowSeconds": 2592000,
+      "reset": {
+        "type": "billing-cycle",
+        "rule": "Resets every 30 days from your subscription or renewal date, monthly even on yearly billing.",
+        "stipulations": [
+          "Inference that Warp provides is priced at public API rates.",
+          "Cloud agent compute costs $0.0015 per vCPU-minute on Linux and double on Windows. Cloud runs add platform charges.",
+          "Plain shell commands are free. Generate and AI Autofill spend usage.",
+          "Unused included usage doesn't carry over. Purchased usage does, for 12 months."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "At the limit, AI stops unless you buy more. Buy once or turn on auto-reload, which is off by default. One monthly spend limit covers the whole team, and Warp says it isn't a guaranteed ceiling.",
+  "card": {
+    "how": [
+      "$20 of agent usage a month at API rates, plus compute and platform charges for cloud runs."
+    ],
+    "ext": [
+      "Bring your own OpenAI, Anthropic or Google key on any plan. The provider bills it, though Warp compute and platform charges can still apply.",
+      "Connect a ChatGPT subscription for OpenAI models or an xAI account for Grok.",
+      "Works in the Warp app and the Warp Agent CLI."
+    ],
+    "quirks": [
+      "Warp moved from credits to dollars in October 2026. Old credit packs kept their face value or inference value, whichever was higher.",
+      "Downgrades apply at once. You get a prorated account balance, not your unused usage.",
+      "Usage for older runs may show as unavailable. That doesn't mean the run was free.",
+      "Claude Fable models need data retention on, even with Help improve Warp off."
+    ]
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Warp pricing",
+      "url": "https://www.warp.dev/pricing",
+      "official": true
+    },
+    {
+      "label": "Warp credits and usage",
+      "url": "https://docs.warp.dev/support-and-community/plans-and-billing/credits/",
+      "official": true
+    },
+    {
+      "label": "Buying more usage",
+      "url": "https://docs.warp.dev/support-and-community/plans-and-billing/add-on-credits/",
+      "official": true
+    },
+    {
+      "label": "Plans, pricing and refunds",
+      "url": "https://docs.warp.dev/support-and-community/plans-and-billing/plans-pricing-refunds/",
+      "official": true
+    },
+    {
+      "label": "Model choice",
+      "url": "https://docs.warp.dev/agents/inference/model-choice/",
+      "official": true
+    },
+    {
+      "label": "Warp price change tracker",
+      "url": "https://www.usagepricing.com/blueprint/activity/warp-2026-10-price-change",
+      "official": false
+    }
+  ]
+}

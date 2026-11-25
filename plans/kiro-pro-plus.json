@@ -1,0 +1,162 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "kiro-pro-plus",
+  "name": "Kiro Pro+",
+  "vendor": "Amazon Web Services",
+  "status": "active",
+  "price": {
+    "amount": 40,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "check": {
+    "label": "Kiro account → Usage",
+    "url": "https://app.kiro.dev/account/usage"
+  },
+  "meters": [
+    {
+      "id": "kiro-credits-month",
+      "label": "Monthly credits",
+      "hint": "2,000 credits. app.kiro.dev/account/usage, or the usage view in Kiro IDE or CLI.",
+      "period": "month",
+      "reset": {
+        "type": "calendar-month",
+        "rule": "Resets at 00:00 UTC on the 1st of each month.",
+        "stipulations": [
+          "Each request costs a fraction of a credit, to 0.01, times the model's multiplier. Auto is 1x.",
+          "GPT-5.6 over 272K tokens costs double. Grok 4.7 over 200K costs 5.4x. Haiku 5.5 over 100K costs 0.3x.",
+          "Unused plan credits don't carry over.",
+          "Trial and add-on credits are spent after plan credits.",
+          "The usage figure updates at least every 5 minutes."
+        ]
+      }
+    }
+  ],
+  "resets": [],
+  "overage": "At the limit, requests pause until the 1st unless you have trial or add-on credits. Add-on credits cost $0.04 each in packs of $5 to $100, up to 5 packs at once. They're charged when you buy them and last 12 months. There's no automatic overage.",
+  "card": {
+    "how": [
+      "2,000 credits a month, reset on the 1st at 00:00 UTC.",
+      "Each request costs a fraction of a credit times the model's multiplier."
+    ],
+    "ext": [
+      "Claude, GPT, Grok, Kimi, GLM, DeepSeek, MiniMax and Qwen models, each at its own multiplier.",
+      "Works in Kiro IDE, Kiro CLI, Kiro Web, IDEs that support ACP, and CI/CD. Routing it through other harnesses such as OpenClaw isn't allowed.",
+      "No bring-your-own-key."
+    ],
+    "quirks": [
+      "Your first upgrade from Free makes the rest of that month free and adds 500 trial credits that last 12 months.",
+      "Upgrades apply at once and are prorated to the second. Downgrades apply next month, and you pay the full current month.",
+      "Auto, DeepSeek 3.2, MiniMax M2.5, GLM-5 and Qwen3 Coder Next also work on the Free plan."
+    ]
+  },
+  "modelTable": {
+    "title": "Kiro: credit multipliers",
+    "note": "Auto is 1x. A model at 2x spends credits twice as fast as Auto for the same request.",
+    "columns": [
+      "Model",
+      "Multiplier"
+    ],
+    "rows": [
+      [
+        "Qwen3 Coder Next",
+        0.05
+      ],
+      [
+        "Claude Haiku 5.5",
+        0.06
+      ],
+      [
+        "MiniMax M2.1",
+        0.15
+      ],
+      [
+        "DeepSeek 3.2",
+        0.25
+      ],
+      [
+        "MiniMax M2.5",
+        0.25
+      ],
+      [
+        "Claude Haiku 4.5",
+        0.4
+      ],
+      [
+        "GLM-5",
+        0.5
+      ],
+      [
+        "GPT-5.6 Luna",
+        0.6
+      ],
+      [
+        "Auto",
+        1
+      ],
+      [
+        "Claude Sonnet 5.5",
+        1.3
+      ],
+      [
+        "Claude Opus 5.5",
+        2
+      ],
+      [
+        "Claude Opus 5",
+        2.2
+      ],
+      [
+        "GPT-5.6 Terra",
+        2.2
+      ],
+      [
+        "Kimi K3",
+        2.4
+      ],
+      [
+        "Grok 4.7",
+        2.7
+      ],
+      [
+        "GPT-5.6 Sol",
+        4.4
+      ]
+    ],
+    "footer": "Claude Fable 5.1 and 5.2 (6x) are Enterprise only."
+  },
+  "events": [],
+  "sources": [
+    {
+      "label": "Kiro pricing",
+      "url": "https://kiro.dev/pricing/",
+      "official": true
+    },
+    {
+      "label": "Kiro billing",
+      "url": "https://kiro.dev/docs/billing/",
+      "official": true
+    },
+    {
+      "label": "Billing questions",
+      "url": "https://kiro.dev/docs/billing/related-questions/",
+      "official": true
+    },
+    {
+      "label": "Add-on credits",
+      "url": "https://kiro.dev/docs/billing/add-on-credits/",
+      "official": true
+    },
+    {
+      "label": "Kiro models",
+      "url": "https://kiro.dev/docs/models/",
+      "official": true
+    },
+    {
+      "label": "500 extra trial credits (blog)",
+      "url": "https://kiro.dev/blog/kiros-new-free-trial-gives-you-500-extra-credits/",
+      "official": true
+    }
+  ]
+}

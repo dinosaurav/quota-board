@@ -1,0 +1,147 @@
+{
+  "$schema": "../schema/plan.schema.json",
+  "id": "claude-max-5x",
+  "name": "Claude Max",
+  "vendor": "Anthropic",
+  "status": "active",
+  "price": {
+    "amount": 100,
+    "currency": "USD",
+    "period": "month"
+  },
+  "lastVerified": "2026-11-24",
+  "detect": {
+    "collector": "claude",
+    "tiers": [
+      "default_claude_max_5x",
+      "max_5x"
+    ]
+  },
+  "check": {
+    "label": "Settings → Usage",
+    "url": "https://claude.ai/settings/usage"
+  },
+  "meters": [
+    {
+      "id": "claude-5h",
+      "label": "5-hour session",
+      "hint": "Starts at your first message",
+      "period": "5h",
+      "reset": {
+        "type": "rolling-from-first-use",
+        "rule": "The window opens with your first message and resets in full 5 hours later.",
+        "stipulations": [
+          "claude.ai, Claude Code, Desktop and IDE use all count toward the same window.",
+          "On Max, a response in progress may finish after the limit (\"wrapping up\"). That overrun counts toward the weekly limit."
+        ]
+      }
+    },
+    {
+      "id": "claude-week",
+      "label": "Weekly, all models",
+      "hint": "Fixed time for your account",
+      "period": "week",
+      "reset": {
+        "type": "fixed-weekly-account",
+        "rule": "Resets at a fixed day and time assigned to your account.",
+        "stipulations": [
+          "The reset time doesn't move when you start using Claude or when your subscription renews."
+        ]
+      }
+    },
+    {
+      "id": "claude-fable",
+      "label": "Fable weekly allowance",
+      "hint": "Max 50% of weekly; burns faster",
+      "period": "week",
+      "reset": {
+        "type": "fixed-weekly-account",
+        "rule": "Resets with the weekly limit.",
+        "stipulations": [
+          "Fable draws from the regular weekly limit and uses it faster than other Claude models.",
+          "Fable can use at most 50% of the weekly limit. The meter shows how much of that 50% you've used."
+        ]
+      }
+    }
+  ],
+  "resets": [
+    {
+      "id": "claude-fable-launch",
+      "label": "Fable 5.2 launch limit resets",
+      "count": {
+        "min": 1,
+        "max": 3,
+        "rule": "1 if you've subscribed under 6 months, 2 for 6–12 months, 3 for over 12 months, counted from your first paid bill."
+      },
+      "expires": "2027-03-08T23:59:00-08:00",
+      "howTo": "Settings → Usage → Limit resets → Reset for free",
+      "stipulations": [
+        "Only for accounts with paid billing before 9 Nov 2026, 10:00 am PT.",
+        "Restores Fable usage on the weekly limit and refills the 5-hour window. It doesn't raise any limit.",
+        "Best used right after you hit a limit early in a week."
+      ]
+    }
+  ],
+  "overage": "Blocked at the limit unless you turn on usage credits (Settings → Usage). Credits bill at API rates up to a monthly cap you set. Credits bought from 7 Dec 2026 expire 12 months after purchase. Monthly API credits included with Max can't pay for this.",
+  "card": {
+    "how": [
+      "A 5-hour session window and a weekly window across all models.",
+      "Fable models have their own cap inside the weekly window: at most 50% of it.",
+      "Every Claude surface draws from the same limits.",
+      "Claude Code has a 25% higher weekly limit since 14 Sep 2026.",
+      "Includes $100 a month of API credits for the Claude API. They can't pay for usage over your plan limits."
+    ],
+    "ext": [
+      "Claude models only. To use Claude on another plan's quota, use Antigravity (Google) or OpenCode Go (Haiku 5.5)."
+    ],
+    "quirks": [
+      "If ANTHROPIC_API_KEY is set in your environment, Claude Code bills the API instead of your plan.",
+      "Verified Ultra accounts ($200) have no 5-hour limit. Max 5x keeps both limits.",
+      "Anthropic renamed Max 5x to Max on 30 Oct 2026, when Max 20x became Ultra."
+    ],
+    "alert": "Unused promo: 1–3 free Fable limit resets, expiring 8 Mar 2027."
+  },
+  "events": [
+    {
+      "date": "2026-12-07",
+      "what": "Usage credits bought from this date expire 12 months after purchase."
+    },
+    {
+      "date": "2027-03-08",
+      "what": "Fable 5.2 launch limit resets expire at 11:59 pm PT."
+    },
+    {
+      "date": "2026-12-10",
+      "what": "One free full limit reset (all models) for Pro, Max, Ultra and Team expires at 2:00 pm PT. Look for it under Settings → Usage → Limit resets.",
+      "unverified": true,
+      "source": "https://pasqualepillitteri.it/en/news/32912/claude-free-full-reset-limit-bugs-december-10"
+    }
+  ],
+  "sources": [
+    {
+      "label": "What is the Max plan?",
+      "url": "https://support.claude.com/en/articles/11049741-what-is-the-max-plan",
+      "official": true
+    },
+    {
+      "label": "Fable models on your plan",
+      "url": "https://support.claude.com/en/articles/15424964-claude-fable-models-on-your-plan",
+      "official": true
+    },
+    {
+      "label": "Fable 5.2 launch offers",
+      "url": "https://support.claude.com/en/articles/17506494-claude-fable-5-2-launch-offers",
+      "official": true
+    },
+    {
+      "label": "Usage credits",
+      "url": "https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans",
+      "official": true
+    },
+    {
+      "label": "Claude Code with Pro or Max",
+      "url": "https://support.claude.com/en/articles/11145838-using-claude-code-with-your-pro-or-max-plan",
+      "official": true
+    }
+  ]
+}
